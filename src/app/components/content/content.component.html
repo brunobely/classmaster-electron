@@ -1,0 +1,32 @@
+<div class="content" *ngIf="selected">
+
+  <div class="main">
+    <div class="header">
+      <div class="badge" [ngSwitch]="selected.contentType">
+        <!-- TODO: might wanna generalize this to accept text or an icon, choose border, etc? -->
+        <app-course-badge *ngSwitchCase="ContentType.Course" [department]="selected.department" [code]="selected.code" [accent]="selected.accent"></app-course-badge>
+        <app-icon-badge *ngSwitchDefault [icon]="selected.icon" [accent]="selected.accent"></app-icon-badge>
+      </div>
+      <!-- TODO: might wanna add a readOnly property to the content item -->
+      <!-- TODO: stop the title from changing on the sidebar when typing, only change on enter or blur -->
+      <textarea
+        #titleArea
+        class="title"
+        [(ngModel)]="selected.title"
+        placeholder="title"
+        [readOnly]="selected.contentType !== ContentType.Course"
+        (blur)="save($event, selected)"
+        (keydown.enter)="$event.preventDefault()"
+        (keyup.enter)="save($event, selected)"
+        oninput="this.style.height = '';this.style.height = this.scrollHeight - 4 + 'px'"
+      ></textarea>
+    </div>
+    <div class="left">
+        <p>Some content goes here!</p>
+    </div>
+  </div>
+
+  <!-- TODO: maybe move this to the right and make selecting a row display info about that assignment? -->
+  <app-timeline [weeks]="weeks"></app-timeline>
+
+</div>

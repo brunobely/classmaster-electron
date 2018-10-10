@@ -1,0 +1,67 @@
+:host {
+  flex: initial;
+  height: 100%;
+  width: 250px;
+
+  border-right: 1px solid lightgrey;
+
+  background-color: whitesmoke;
+
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.sidebar {
+  list-style-type: none;
+  padding: 0 20px;
+  margin: 20px 0;
+}
+
+.sidebar li {
+
+  cursor: default;
+
+  user-select: none;
+
+  height: 22px;
+
+  // TODO: figure out why there's a 1px space between buttons (went away when I set this height as 25px, was 18px)
+  // margin: 0 0 .4 0;
+  // margin: 0;
+}
+
+.sidebar button {
+  // background-color: tomato;
+  border: none;
+  height: 100%;
+  width: 100%;
+
+  text-align: left;
+  outline: none;
+
+  // border-radius: 3px;
+
+  background-color: transparent;
+
+  font-weight: 400;
+  font-size: 14px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; // TODO: not working
+}
+
+.sidebar button.selected {
+  background-color: lightgrey;
+}
+
+.sidebar button.selectedTop {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.sidebar button.selectedBottom {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}

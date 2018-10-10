@@ -1,0 +1,73 @@
+:host {
+  flex: auto;
+
+  height: 100%;
+
+  background-color: white;
+
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box; // TODO: not needed since electron app, remove from all
+          box-sizing: border-box;
+}
+
+.badge {
+
+  flex: initial;
+  box-sizing: border-box;
+  // FIXME: was 50.6px before. breaks (grows to the right) with longer text. figure this out
+  width: 64.6px; // TODO: might have to make this more general if 44px isn't hard-coded for title height
+  // (50.6px ends up being 44 who knows why...)
+  margin: 2px 10px;
+  padding: 1px;
+}
+
+.header {
+  display: flex;
+  padding: 35px 50px 0 50px;
+  height: 40px;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.main {
+  flex: auto;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.body {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.content textarea.title {
+  flex: auto;
+
+  font-size: 2em;
+  font-weight: 700;
+  caret-color: tomato; // TODO: figure out how to make it a bit thicker
+
+  border: none;
+  outline: none;
+
+  word-break: break-word;
+  resize: none;
+  // TODO: expand it https://alistapart.com/article/expanding-text-areas-made-elegant
+  // also remove the oninput method (doesn't work for resizing or when changing selection on sidebar)
+  // background-color: lightblue;
+
+  width: 100%;
+  height: 100%;
+}
+
+.content textarea:read-only {
+  user-select: none;
+  cursor: default;
+}
+

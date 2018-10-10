@@ -1,0 +1,11 @@
+<div
+  class="box"
+  [ngStyle]="computedStyle"
+>
+  <div class="department spaced">
+    <span *ngFor="let d of department.split('')">{{d}}</span>
+  </div>
+  <div class="code spaced">
+    <span *ngFor="let c of code.split('')">{{c}}</span>
+  </div>
+</div>

@@ -1,5 +1,5 @@
-<div class="container">
-  <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-  </h1>
+<div class="master-detail-container">
+  <div class="title-bar"></div>
+  <app-sidebar style="padding-top: 22px" [items]="contentItems" [selected]="selectedItems" (select)="changeSelection($event)"></app-sidebar>
+  <app-content style="padding-top: 22px" [selected]="selectedItems[0]" (update)="updateItem($event)"></app-content>
 </div>

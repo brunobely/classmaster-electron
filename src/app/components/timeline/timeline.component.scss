@@ -1,0 +1,79 @@
+:host {
+  flex: initial;
+  height: 100%;
+  width: 300px;
+  padding: 20px;
+
+  // background-color: #fcfcfc;
+  background: linear-gradient(white 0%, #fcfcfc 50%);
+  // border-left: 1px solid whitesmoke;
+
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-variant-numeric: tabular-nums;
+}
+
+tr.weeks-row > td:first-of-type {
+  width: 36px; // FIXME: breaks on week numbers longer than two digits
+  // maybe try a smaller "WEEK" on top of the number in a lighter color
+}
+
+tr.weeks-row {
+  border-bottom: 1px solid #eee;
+  height: 30px;
+}
+
+// Hack for padding left/right on tr.weeks-row
+tr.weeks-row td:first-child {
+  padding-left: 5px;
+}
+tr.weeks-row tr td:last-child {
+  padding-right: 5px;
+}
+
+// TODO: Maybe use accent color here
+tr.weeks-row.current {
+  background-color: #dfd;
+}
+
+tr.weeks-row.current tr.assignments-row {
+  border-bottom-color: #cec;
+}
+
+tr.assignments-row {
+  border-bottom: 1px solid whitesmoke;
+  height: 30px;
+}
+
+tr:last-of-type {
+  border-bottom: none;
+}
+
+tr.assignments-row > td {
+  padding: 0 5px;
+}
+
+tr.assignments-row > td:first-of-type {
+  width: 57px;
+  box-sizing: border-box;
+}
+
+.nothing-due {
+  font-weight: 600;
+  color: #aaa;
+  // text-transform: uppercase;
+  // letter-spacing: 0.1em;
+}
+
+p.nothing-due {
+  margin: 0;
+  font-size: small;
+  padding-left: 5px;
+}

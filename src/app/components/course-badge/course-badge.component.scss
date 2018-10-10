@@ -1,0 +1,31 @@
+// :host {
+  // Moved this to .badge in content styles
+  // flex: initial;
+  // box-sizing: border-box;
+  // // FIXME: was 50.6px before. breaks (grows to the right) with longer text. figure this out
+  // width: 64.6px; // TODO: might have to make this more general if 44px isn't hard-coded for title height
+  // // (50.6px ends up being 44 who knows why...)
+  // margin: 2px 10px;
+  // padding: 1px;
+  // text-align: right;
+// }
+
+.box {
+  padding: 4px;
+  // border: 2px solid lighten(coral, 5%);
+  border: 2px solid lighten(grey, 5%);
+  border-radius: 4px;
+  // color: coral;
+  color: grey;
+}
+
+// https://stackoverflow.com/questions/24557411/css-letter-spacing-percent-to-completely-fit-the-div-container
+.spaced {
+  display: flex;
+  justify-content: space-between
+}
+
+span {
+  font-size: x-small;
+  font-weight: 800;
+}
