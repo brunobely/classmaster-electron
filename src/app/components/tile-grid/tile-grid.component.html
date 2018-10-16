@@ -1,0 +1,7 @@
+<div class="grid">
+  <app-tile
+    *ngFor="let type of displayOrder"
+    [name]="type"
+    [data]="assignments[type]"
+  ></app-tile>
+</div>

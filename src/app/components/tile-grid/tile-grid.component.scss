@@ -1,0 +1,24 @@
+:host {
+  margin: 24px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex: auto;
+  // background-color: cornflowerblue;
+}
+
+.grid {
+  border-radius: 5px;
+  display: grid;
+  // background-color: lightgreen;
+
+  flex: auto;
+
+  overflow: auto;
+
+  grid-template-columns: repeat(auto-fill, 100%);
+  grid-template-rows: 1fr 1fr;
+  align-content: start;
+  grid-gap: 25px;
+  grid-auto-flow: column;
+}

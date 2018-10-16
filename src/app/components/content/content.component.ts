@@ -10,7 +10,7 @@ import * as ctType from '../../content-type';
 import { ContentItem } from '../../content-item';
 import { CourseItem } from '../../course-item';
 
-import { WEEKS_4131 } from '../../mock-4131-weeks';
+import { WEEKS_4131, ASSIGNMENTS_4131 } from '../../mock-4131';
 
 @Component({
   selector: 'app-content',
@@ -24,6 +24,7 @@ export class ContentComponent implements OnInit {
   @Output() update = new EventEmitter<ContentItem|CourseItem>();
 
   weeks = WEEKS_4131;
+  assignments = ASSIGNMENTS_4131;
 
   constructor() { }
 

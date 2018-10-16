@@ -21,12 +21,20 @@
         oninput="this.style.height = '';this.style.height = this.scrollHeight - 4 + 'px'"
       ></textarea>
     </div>
-    <div class="left">
-        <p>Some content goes here!</p>
+
+    <div class="body">
+      <div class="overview-container">
+        <h2>Overview</h2>
+        <app-tile-grid [assignments]="assignments"></app-tile-grid>
+      </div>
+      <div class="upcoming-container">
+        <!-- // TODO: maybe move this to the left and make selecting a row display info about that assignment? -->
+        <!-- // TODO: maybe display info about the assignment as an aside to the right -->
+        <h2>Upcoming</h2>
+        <app-timeline [weeks]="weeks"></app-timeline>
+      </div>
     </div>
   </div>
 
-  <!-- TODO: maybe move this to the right and make selecting a row display info about that assignment? -->
-  <app-timeline [weeks]="weeks"></app-timeline>
 
 </div>

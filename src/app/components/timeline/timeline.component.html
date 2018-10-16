@@ -1,30 +1,30 @@
-<h2>
-  Upcoming
-</h2>
 <!-- Otherwise just show an empty table? or still have weeks with no assignments? -->
-<table class="weeks" *ngIf="weeks">
-  <tbody>
-    <tr class="weeks-row" [class.current]="week.dateRange.contains(today)" *ngFor="let week of weeks">
-      <!-- Maybe Week? -->
-      <!-- TODO: put little begin and end dates (very light grey?) to indicate start/end of the week -->
-      <td [class.nothing-due]="week.assignments.length === 0">W {{week.number}}</td>
-      <td>
-        <table class="assignments" *ngIf="week.assignments.length > 0">
-          <tr class="assignments-row" *ngFor="let assignment of week.assignments">
-            <td> <!-- format based on locale -->
-              {{assignment.dueDate | date:'MM/dd'}}
-            </td>
-            <!-- maybe color code by type of assignment -->
-            <!-- then by shade when multiple courses selected? or always by shade? -->
-            <td>
-              {{assignment.title}}
-            </td>
-          </tr>
-        </table>
-        <p class="nothing-due" *ngIf="week.assignments.length === 0">Nothing this week</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<!-- TODO: use grid instead? -->
+<div class="frame">
+  <table class="weeks" *ngIf="weeks">
+    <tbody>
+      <tr class="weeks-row" [class.current]="week.dateRange.contains(today)" *ngFor="let week of weeks">
+        <!-- Maybe Week? -->
+        <!-- TODO: put little begin and end dates (very light grey?) to indicate start/end of the week -->
+        <td [class.nothing-due]="week.assignments.length === 0">W {{week.number}}</td>
+        <td>
+          <table class="assignments" *ngIf="week.assignments.length > 0">
+            <tr class="assignments-row" *ngFor="let assignment of week.assignments">
+              <td> <!-- format based on locale -->
+                {{assignment.dueDate | date:'MM/dd'}}
+              </td>
+              <!-- maybe color code by type of assignment -->
+              <!-- then by shade when multiple courses selected? or always by shade? -->
+              <td>
+                {{assignment.title}}
+              </td>
+            </tr>
+          </table>
+          <p class="nothing-due" *ngIf="week.assignments.length === 0">Nothing this week</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <!-- TODO: cover bottom of timeline with alpha to background gradient? -->

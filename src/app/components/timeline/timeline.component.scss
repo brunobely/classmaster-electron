@@ -1,8 +1,9 @@
 :host {
-  flex: initial;
+  flex: auto;
+  display: flex;
   height: 100%;
-  width: 300px;
-  padding: 20px;
+  // width: 100%;
+  margin: 24px;
 
   // background-color: #fcfcfc;
   background: linear-gradient(white 0%, #fcfcfc 50%);
@@ -13,16 +14,32 @@
           box-sizing: border-box;
 }
 
+.frame {
+  flex: auto;
+  display: flex;
+
+  width: 100%;
+  // height: 100%;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  overflow: auto;
+}
+
 table {
   width: 100%;
+  // height: 100%;
+  flex: auto;
   border-collapse: collapse;
   table-layout: fixed;
   font-variant-numeric: tabular-nums;
+  overflow: auto;
 }
 
 tr.weeks-row > td:first-of-type {
   width: 36px; // FIXME: breaks on week numbers longer than two digits
   // maybe try a smaller "WEEK" on top of the number in a lighter color
+  text-align: center;
 }
 
 tr.weeks-row {
