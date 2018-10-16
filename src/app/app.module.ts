@@ -31,6 +31,7 @@ import { CourseBadgeComponent } from './components/course-badge/course-badge.com
 import { IconBadgeComponent } from './components/icon-badge/icon-badge.component';
 import { TileGridComponent } from './components/tile-grid/tile-grid.component';
 import { TileComponent } from './components/tile/tile.component';
+import { TileRowComponent } from './components/tile-row/tile-row.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -53,7 +54,8 @@ library.add(fas.faCalendarAlt);
     CourseBadgeComponent,
     IconBadgeComponent,
     TileGridComponent,
-    TileComponent
+    TileComponent,
+    TileRowComponent
   ],
   imports: [
     BrowserModule,

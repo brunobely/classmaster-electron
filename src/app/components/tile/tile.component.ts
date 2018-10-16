@@ -19,6 +19,8 @@ export class TileComponent implements OnInit {
     // TODO: add these globally?
     plural.addRule('homework', 'homework');
     plural.addRule('quiz', 'quizzes');
+
+    console.log(this.name, this.data);
   }
 
   plural(s: string, n?: number) {

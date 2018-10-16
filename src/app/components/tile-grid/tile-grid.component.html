@@ -1,7 +1,20 @@
 <div class="grid">
-  <app-tile
-    *ngFor="let type of displayOrder"
-    [name]="type"
-    [data]="assignments[type]"
-  ></app-tile>
+  <div class="column" *ngFor="let i of columnIndices">
+    <ng-container *ngIf="i < displayOrder.length - 1">
+        <app-tile
+          [name]="displayOrder[i]"
+          [data]="assignments[displayOrder[i]]"
+        ></app-tile>
+        <app-tile
+          [name]="displayOrder[i+1]"
+          [data]="assignments[displayOrder[i+1]]"
+        ></app-tile>
+    </ng-container>
+    <ng-container *ngIf="i == displayOrder.length - 1">
+        <app-tile
+          [name]="displayOrder[i]"
+          [data]="assignments[displayOrder[i]]"
+        ></app-tile>
+    </ng-container>
+  </div>
 </div>

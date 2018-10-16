@@ -1,5 +1,9 @@
+<h3 class="name">{{plural(name) | titlecase}}</h3>
 <div class="tile">
-  <h3 class="name">{{plural(name) | titlecase}}</h3>
   <!-- <li *ngFor="let d of data">{{d.dueDate | date:'E, M/d (h:mmaaaaa)'}} {{d.title}}</li> -->
-  <li *ngFor="let d of data">{{d.title}} {{d.dueDate | date:'M/d'}}</li>
+  <app-tile-row
+    *ngFor="let d of data"
+    [assignment]="d"
+  ></app-tile-row>
 </div>
+<!-- <div class="fade-out"></div> -->
