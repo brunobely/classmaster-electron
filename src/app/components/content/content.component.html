@@ -4,7 +4,7 @@
     <div class="header">
       <div class="badge" [ngSwitch]="selected.contentType">
         <!-- TODO: might wanna generalize this to accept text or an icon, choose border, etc? -->
-        <app-course-badge *ngSwitchCase="ContentType.Course" [department]="selected.department" [code]="selected.code" [accent]="selected.accent"></app-course-badge>
+        <app-course-badge *ngSwitchCase="ContentType.Course" [department]="course.department" [code]="course.code" [accent]="course.accent"></app-course-badge>
         <app-icon-badge *ngSwitchDefault [icon]="selected.icon" [accent]="selected.accent"></app-icon-badge>
       </div>
       <!-- TODO: might wanna add a readOnly property to the content item -->
@@ -15,23 +15,24 @@
         [(ngModel)]="selected.title"
         placeholder="title"
         [readOnly]="selected.contentType !== ContentType.Course"
-        (blur)="save($event, selected)"
+        (blur)="updateTitle($event, selected)"
         (keydown.enter)="$event.preventDefault()"
-        (keyup.enter)="save($event, selected)"
+        (keyup.enter)="updateTitle($event, selected)"
         oninput="this.style.height = '';this.style.height = this.scrollHeight - 4 + 'px'"
       ></textarea>
     </div>
 
-    <div class="body">
+    <div *ngIf="course" class="body">
       <div class="overview-container">
         <h2>Overview</h2>
-        <app-tile-grid [assignments]="assignments"></app-tile-grid>
+        <app-tile-grid [assignments]="course.assignments"></app-tile-grid>
       </div>
       <div class="upcoming-container">
         <!-- // TODO: maybe move this to the left and make selecting a row display info about that assignment? -->
         <!-- // TODO: maybe display info about the assignment as an aside to the right -->
         <h2>Upcoming</h2>
-        <app-timeline [weeks]="weeks"></app-timeline>
+        <!-- TODO: weeks() is getting called 4x, figure that out -->
+        <app-timeline [weeks]="course.weeks()"></app-timeline>
       </div>
     </div>
   </div>

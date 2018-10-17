@@ -1,28 +1,15 @@
 import { Week } from './week';
-import { Assignment } from './assignment';
+import { Assignments } from './assignment';
+import { Course } from './course';
+
+import * as Color from 'color';
 
 // TODO: maybe move all this boilerplate to a separate file and export `moment`
 import * as Moment from 'moment';
 import { extendMoment } from 'moment-range';
 const moment = extendMoment(Moment);
 
-export const ASSIGNMENTS_4131: { [assignmentType: string]: Assignment[] } = {
-  'test': [
-    {
-      id: 0,
-      title: 'Homework 1',
-      dueDate: new Date('2018-09-07'),
-      type: 'homework',
-    },
-  ],
-  'test2': [
-    {
-      id: 1,
-      title: 'Homework 1',
-      dueDate: new Date('2018-09-07'),
-      type: 'homework',
-    },
-  ],
+export const ASSIGNMENTS_4131: Assignments = {
   'homework': [
     {
       id: 2,
@@ -290,3 +277,5 @@ export const WEEKS_4131: Week[] = [
     ],
   }
 ];
+
+export const CSCI_4131: Course = new Course(0, 'Internet Programming', '4131', 'CSCI', ASSIGNMENTS_4131, Color('#8edbac'));

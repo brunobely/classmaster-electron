@@ -6,6 +6,7 @@ import { extendMoment, DateRange } from 'moment-range';
 const moment = extendMoment(Moment);
 
 // TODO: naming
+// TODO: interface instead?
 export class Week {
   number: number;
   dateRange: DateRange;

@@ -17,6 +17,7 @@ export class CourseBadgeComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges() {
+    console.log('course badge ngOnChanges', this.department, this.code, this.accent);
     this.computedStyle = {
       'border-color': this.accent.lighten(0.05),
       'color': this.accent.hex(),
