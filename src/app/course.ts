@@ -11,21 +11,21 @@ import { extendMoment } from 'moment-range';
 const moment = extendMoment(Moment);
 
 export class Course {
-  id: number;
+  id: string;
   title: string;
-  code: string;
-  department: string;
-  assignments: Assignments;
   accent: Color;
-  icon: Icon;
+  code?: string;
+  department?: string;
+  assignments?: Assignments;
+  icon?: Icon;
 
-  constructor(id: number, title: string, code: string, department: string, assignments: Assignments, accent: Color, icon?: Icon) {
+  constructor(id: string, title: string, accent: Color, code?: string, department?: string, assignments?: Assignments, icon?: Icon) {
     this.id = id;
     this.title = title;
+    this.accent = accent;
     this.code = code;
     this.department = department;
     this.assignments = assignments;
-    this.accent = accent;
     this.icon = icon;
   }
 

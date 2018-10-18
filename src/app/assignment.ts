@@ -3,7 +3,7 @@ export interface Assignments {
 }
 
 export class Assignment {
-  id: number;
+  id: string;
   title: string;
   dueDate: Date;
   type: string;

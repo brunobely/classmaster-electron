@@ -42,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 library.add(fas.faStar);
 library.add(fas.faUniversity);
 library.add(fas.faCalendarAlt);
+library.add(fas.faPlus);
 
 @NgModule({
   declarations: [

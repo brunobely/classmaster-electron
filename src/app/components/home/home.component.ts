@@ -4,6 +4,8 @@ import { ContentItem } from '../../content-item';
 import { CourseItem } from '../../course-item';
 
 import { MOCK_ITEMS } from '../../mock-items';
+import { Course } from '../../course';
+import { UserDataService } from '../../services/user-data/user-data.service';
 
 @Component({
   selector: 'app-home',
@@ -13,17 +15,22 @@ import { MOCK_ITEMS } from '../../mock-items';
 export class HomeComponent implements OnInit {
 
   contentItems: Array<ContentItem|CourseItem>[] = MOCK_ITEMS;
+  courses: Course[];
 
   selectedSection: number; // selecting across sections is disallowed
   selectedRows: number[];
   selectedItems: Array<ContentItem|CourseItem>;
 
-  constructor() { }
+  constructor(private userDataService: UserDataService) { }
 
   ngOnInit() {
     this.selectedSection = 0;
     this.selectedRows = [0];
     this.selectedItems = this.contentItems[this.selectedSection].filter((_, i) => this.selectedRows.includes(i));
+
+    this.userDataService.getCourses(courses => {
+      this.courses = courses;
+    });
   }
 
   changeSelection(event) {

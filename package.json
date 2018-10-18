@@ -45,10 +45,14 @@
     "@fortawesome/free-regular-svg-icons": "^5.4.0",
     "@fortawesome/free-solid-svg-icons": "^5.4.0",
     "@types/color": "^3.0.0",
+    "@types/fs-extra": "^5.0.4",
     "@types/moment-range": "^3.1.0",
+    "@types/uuid": "^3.4.4",
     "color": "^3.0.0",
+    "fs-extra": "^7.0.0",
     "moment-range": "^4.0.1",
-    "plural": "^1.1.0"
+    "plural": "^1.1.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.6.3",

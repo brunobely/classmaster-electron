@@ -8,6 +8,7 @@
 }
 
 .grid {
+  padding-bottom: 15px;
   flex: auto;
 
   border-radius: 5px; // TODO: 0 might be better UX since it's easier to tell it's scrollable

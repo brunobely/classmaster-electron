@@ -4,7 +4,7 @@ import { ContentType } from './content-type';
 import { Icon } from './icon';
 
 export class ContentItem {
-  id: number;
+  id: string;
   title: string;
   accent: Color;
   contentType: ContentType;

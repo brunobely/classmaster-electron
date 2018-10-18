@@ -6,7 +6,7 @@ import * as Color from 'color';
 export const MOCK_ITEMS: Array<ContentItem|CourseItem>[] = [
   [
     {
-      id: 0,
+      id: '0',
       title: 'Class Schedule',
       accent: Color('#708090'),
       contentType: ContentType.Schedule,
@@ -18,7 +18,7 @@ export const MOCK_ITEMS: Array<ContentItem|CourseItem>[] = [
   ],
   [
     {
-      id: 1,
+      id: '1',
       title: 'Today',
       accent: Color('#FFD700'),
       contentType: ContentType.Planning,
@@ -28,7 +28,7 @@ export const MOCK_ITEMS: Array<ContentItem|CourseItem>[] = [
       },
     },
     {
-      id: 2,
+      id: '2',
       title: 'Upcoming',
       accent: Color('#CD5C5C'),
       contentType: ContentType.Planning,
@@ -40,7 +40,7 @@ export const MOCK_ITEMS: Array<ContentItem|CourseItem>[] = [
   ],
   [
     {
-      id: 3,
+      id: '3',
       title: 'Internet Programming',
       department: 'CSCI',
       code: '4131',
@@ -48,7 +48,7 @@ export const MOCK_ITEMS: Array<ContentItem|CourseItem>[] = [
       contentType: ContentType.Course,
     },
     {
-      id: 4,
+      id: '4',
       title: 'Advanced Algorithms & Data Structures',
       department: 'CSCI',
       code: '5421',
@@ -56,7 +56,7 @@ export const MOCK_ITEMS: Array<ContentItem|CourseItem>[] = [
       contentType: ContentType.Course,
     },
     {
-      id: 5,
+      id: '5',
       title: 'Technical Writing',
       department: 'WRIT',
       code: '3562W',
@@ -64,7 +64,7 @@ export const MOCK_ITEMS: Array<ContentItem|CourseItem>[] = [
       contentType: ContentType.Course,
     },
     {
-      id: 6,
+      id: '6',
       title: 'Solid Earth Dynamics',
       department: 'ESCI',
       code: '2201',

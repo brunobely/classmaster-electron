@@ -2,6 +2,11 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
 import { ContentItem } from '../../content-item';
 import { CourseItem } from '../../course-item';
+import { UserDataService } from '../../services/user-data/user-data.service';
+import { Course } from '../../course';
+
+import * as Color from 'color';
+import * as uuidv1 from 'uuid/v1';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,14 +16,58 @@ import { CourseItem } from '../../course-item';
 export class SidebarComponent implements OnInit {
 
   @Input() items: Array<ContentItem|CourseItem>[];
+  @Input() courses: Course[];
   @Input() selected: Array<ContentItem|CourseItem>;
 
   @Output() select = new EventEmitter<{ selectedItems: Array<ContentItem|CourseItem>, section: number, rows: number[] }>();
 
-  constructor() { }
+  // Will be non-null when a new course is being created, saved on enter/blur and discarded on esc/blur with empty title
+  staging: boolean;
+
+  constructor(private userDataService: UserDataService) { }
 
   ngOnInit() {
     console.log(this.selected);
+
+    this.staging = false;
+  }
+
+  onAdd(event) {
+    // TODO: animate new course coming in?
+    console.log('add', event);
+    // TODO: see if this will trigger a re-render
+    this.staging = true;
+    // ! TODO: focus the input when doing this
+  }
+
+  // TODO: 'enter' is causing blur (maybe because the element ceases to exist?) so maybe just handle it in this function
+  // (had to add a test for `this.staging` in onStagingSave to avoid writing the file twice)
+  onStagingBlur(event, title) {
+    console.log('blur', event, title);
+    if (title === '') {
+      console.log('title empty');
+      this.onStagingCancel(null);
+    } else {
+      console.log('title not empty');
+      this.onStagingSave(null, title);
+    }
+  }
+
+  onStagingCancel(event) {
+    console.log('cancel', event);
+    this.staging = false;
+  }
+
+  onStagingSave(event, title) {
+    console.log('save: event', event, 'title', title);
+
+    if (this.staging && title !== '') {
+      // TODO: pick a random accent from a few values? maybe choose based on what was already picked?
+      const course: Course = new Course(uuidv1(), title, Color('#777777'));
+      this.userDataService.createCourse(course);
+
+      this.staging = false;
+    }
   }
 
   // TODO: setting `event` type to Event won't allow modifier key properties. Find out what the correct type is.

@@ -11,8 +11,21 @@ export class UserDataService {
 
   constructor() { }
 
-  getCourse(id: number): Course {
+  getCourse(id: string): Course {
     return CSCI_4131;
+  }
+
+  async getCourses(callback) {
+    ipcRenderer.once('reply:load:courses', (event, arg) => {
+      console.log('Got courses:', arg.courses);
+      callback(arg.courses);
+    });
+    ipcRenderer.send('load:courses', { });
+  }
+
+  createCourse(course: Course) {
+    // Send course as a property of an object to enable future passing of more options
+    ipcRenderer.send('create:course', { course });
   }
 
   // Finds the course by its ID and updates the rest of the information.
