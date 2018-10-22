@@ -2,9 +2,11 @@ import {
   Component,
   OnInit,
   EventEmitter,
-  Input,
   Output,
   OnChanges,
+  ViewChild,
+  ElementRef,
+  AfterViewChecked,
 } from '@angular/core';
 import * as ctType from '../../content-type';
 import { ContentType } from '../../content-type';
@@ -25,8 +27,11 @@ import * as Color from 'color';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent implements OnInit, OnChanges {
+export class ContentComponent implements OnInit, OnChanges, AfterViewChecked {
   ContentType = ctType.ContentType; // need this so we can reference ContentType in template
+
+  // https://stackoverflow.com/questions/48226868/document-getelementbyid-replacement-in-angular4-typescript/48226924
+  @ViewChild('titleArea') titleArea: ElementRef;
 
   @Output() update = new EventEmitter<CourseItem>();
 
@@ -39,6 +44,13 @@ export class ContentComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+  }
+
+  // TODO: why does this get called once per change in sidebar but 4 times in the beginning?
+  ngAfterViewChecked(): void {
+    if (!this.title()) {
+      this.titleArea.nativeElement.focus();
+    }
   }
 
   // ! TODO: this only returns the first course. delete it and maybe move the header into each content component?

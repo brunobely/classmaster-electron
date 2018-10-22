@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, AfterViewChecked, DoCheck, ChangeDetectorRef } from '@angular/core';
 
 import { ContentItem } from '../../content-item';
 import { CourseItem } from '../../course-item';
@@ -18,7 +18,7 @@ const { Menu, MenuItem } = require('electron').remote;
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit, AfterViewChecked {
+export class SidebarComponent implements OnInit, /*AfterViewChecked,*/ DoCheck {
 
   // TODO: Course should also not be here, just a workaround so onCourseSelect won't break for now
   // Use `instanceof` there when checking so this can be removed
@@ -27,15 +27,18 @@ export class SidebarComponent implements OnInit, AfterViewChecked {
   @Output() select = new EventEmitter<{ selectedItems: Array<ContentItem|CourseItem|Course>, section: number, rows: number[] }>();
 
   // Will be non-null when a new course is being created, saved on enter/blur and discarded on esc/blur with empty title
-  staging: boolean;
+  // staging: boolean;
 
-  courseItemMenu: Electron.Menu; // cannot just use `Menu` as that's not a type and just an object from `remote`
+  contextMenuOpen: boolean[] = [];
 
-  constructor(public store: StoreService) { }
+  singleCourseContextMenu: Electron.Menu; // cannot just use `Menu` as that's not a type and just an object from `remote`
+  multipleCourseContextMenu: Electron.Menu; // cannot just use `Menu` as that's not a type and just an object from `remote`
+
+  constructor(public store: StoreService, private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
 
-    this.staging = false;
+    // this.staging = false;
 
     this.initContextMenus();
 
@@ -52,69 +55,118 @@ export class SidebarComponent implements OnInit, AfterViewChecked {
     // });
   }
 
-  ngAfterViewChecked(): void {
-    console.log('after view checked', this.staging);
-    if (this.staging) {
-      document.getElementById('staging').focus();
+  // ngAfterViewChecked(): void {
+  //   console.log('after view checked', this.staging);
+  //   if (this.staging) {
+  //     document.getElementById('staging').focus();
+  //   }
+  // }
+
+  ngDoCheck(): void {
+    console.log('do check', this.store.courses);
+    if (this.store.courses && this.contextMenuOpen.length !== this.store.courses.length) {
+      console.log('setting all context menus to false');
+      this.contextMenuOpen = Array(this.store.courses.length).fill(false);
     }
+    console.log('contextMenuOpen:', this.contextMenuOpen);
   }
 
   initContextMenus() {
-    this.courseItemMenu = new Menu();
-    const deleteCourseMenuItem = new MenuItem({
-      label: 'Delete',
+    this.singleCourseContextMenu = new Menu();
+    this.multipleCourseContextMenu = new Menu();
+
+    // TODO: maybe make a factory function for this that takes the number of courses to be deleted?
+    const deleteSingleCourseMenuItem = new MenuItem({
+      label: 'Delete Course',
       click: () => {
         console.log('delete');
       }
     });
-    this.courseItemMenu.append(deleteCourseMenuItem);
+
+    const deleteMultipleCoursesMenuItem = new MenuItem({
+      label: 'Delete Courses',
+      click: () => {
+        console.log('delete');
+      }
+    });
+
+    this.singleCourseContextMenu.append(deleteSingleCourseMenuItem);
+    this.multipleCourseContextMenu.append(deleteMultipleCoursesMenuItem);
   }
 
-  openContextMenu(event, courseItem) {
-    console.log('event', event, 'courseItem', courseItem);
-    this.courseItemMenu.popup({ window: remote.getCurrentWindow() });
+  // ! BUG: when the context menu is open, then we right-click on any course, the
+  // !      contextMenuOptions callback only gets called AFTER openContextMenu, which
+  // !      results in weird behavior
+  openContextMenu(event, index: number) {
+    console.log('event', event, 'course index', index);
+
+    const contextMenuOptions = {
+      window: remote.getCurrentWindow(),
+      callback: () => {
+        console.log('context menu closed');
+        this.contextMenuOpen = Array(this.store.courses.length).fill(false);
+        this.changeDetector.detectChanges();
+      },
+    };
+
+    if (this.store.selectedCourses.length > 1 && this.store.selectedCourses.includes(index)) {
+      // TODO: Update text with the number of courses selected
+      this.store.selectedCourses.forEach(i => {
+        this.contextMenuOpen[i] = true;
+      });
+      // TODO: might want different options for multiple vs single course menus
+      this.multipleCourseContextMenu.popup(contextMenuOptions);
+    } else {
+      this.contextMenuOpen[index] = true;
+      this.singleCourseContextMenu.popup(contextMenuOptions);
+    }
   }
 
-  // TODO: clicking on new course button while staging input box is focused causes the input to disappear
-  //       on mousedown then reappear on mouseup.  Fix it, maybe by disabling the button while the input
-  //       is focused, maybe by doing something else.
+//  // TODO: clicking on new course button while staging input box is focused causes the input to disappear
+//  //       on mousedown then reappear on mouseup.  Fix it, maybe by disabling the button while the input
+//  //       is focused, maybe by doing something else.
   onNewCourse(event) {
     // TODO: animate new course coming in?
     console.log('new course', event);
-    // TODO: see if this will trigger a re-render
-    this.staging = true;
-    // ! TODO: focus the input when doing this
+
+    const i = this.store.addCourse(new Course(uuidv1(), '', Color('#777777')));
+    // TODO: maybe include this in the addCourse function (or make a newCourse function, whatever)
+    this.store.selectCourse(i);
+
+    // See if this will trigger a re-render... it does!                                          <-- (or "It"?)
+    // this.staging = true;
+//    // ! TODO: focus the input when doing this
   }
 
-  // TODO: 'enter' is causing blur (maybe because the element ceases to exist?) so maybe just handle it in this function
-  // (had to add a test for `this.staging` in onStagingSave to avoid writing the file twice)
-  onStagingBlur(event, title) {
-    console.log('blur', event, title);
-    if (title === '') {
-      console.log('title empty');
-      this.onStagingCancel(null);
-    } else {
-      console.log('title not empty');
-      this.onStagingSave(null, title);
-    }
-  }
+  // // TODO: 'enter' is causing blur (maybe because the element ceases to exist?) so maybe just handle it in this function
+  // // (had to add a test for `this.staging` in onStagingSave to avoid writing the file twice)
+  // onStagingBlur(event, title) {
+  //   console.log('blur', event, title);
+  //   if (title === '') {
+  //     console.log('title empty');
+  //     this.onStagingCancel(null);
+  //   } else {
+  //     console.log('title not empty');
+  //     this.onStagingSave(null, title);
+  //   }
+  // }
 
-  onStagingCancel(event) {
-    console.log('cancel', event);
-    this.staging = false;
-  }
+  // onStagingCancel(event) {
+  //   console.log('cancel', event);
+  //   this.staging = false;
+  // }
 
-  onStagingSave(event, title) {
-    console.log('save: event', event, 'title', title);
+  // onStagingSave(event, title) {
+  //   console.log('save: event', event, 'title', title);
 
-    if (this.staging && title !== '') {
-      // TODO: pick a random accent from a few values? maybe choose based on what was already picked?
-      const course: Course = new Course(uuidv1(), title, Color('#777777'));
-      this.store.addCourse(course);
+  //   if (this.staging && title !== '') {
+  //     // TODO: pick a random accent from a few values? maybe choose based on what was already picked?
+  //     const course: Course = new Course(uuidv1(), title, Color('#777777'));
+  //     this.store.addCourse(course);
 
-      this.staging = false;
-    }
-  }
+  //     this.staging = false;
+  //   }
+  // }
 
   // TODO: setting `event` type to Event won't allow modifier key properties. Find out what the correct type is.
   onItemSelect(event, contentType: ContentType.Schedule|ContentType.Today|ContentType.Upcoming, section: number, row: number) {
@@ -122,7 +174,9 @@ export class SidebarComponent implements OnInit, AfterViewChecked {
     // this.selected.title = selectedItem.title;
     // console.log(this.selected);
 
-    this.store.selectType(contentType);
+    if (!event.ctrlKey && !event.metaKey) {
+      this.store.selectType(contentType);
+    }
 
     // TODO: make this more general
     // this.select.emit({ selectedItems: [selectedItem], section, rows: [row] });
@@ -144,6 +198,7 @@ export class SidebarComponent implements OnInit, AfterViewChecked {
     // Shift and command (like finder, shift selectes from the most recently selected one to the clicked one.
 
     // Shouldn't interfere with Macs as if ctrl is set for toggling right-clicks, it won't fire the event (at least wouldn't here)
+    // TODO: Could interfere with windows (meta key on windows?), so maybe use `CommandOrControl` from electron?
     if (event.ctrlKey || event.metaKey) {
       // The order of selected items shouldn't affect the view. Still, maybe add them in the right order later...
       if (this.store.selectedCourses.includes(index)) {
@@ -152,7 +207,9 @@ export class SidebarComponent implements OnInit, AfterViewChecked {
         this.store.removeCourseFromSelection(index);
       } else {
         // selectedCourses.push(...this.selected);
-        this.store.addCourseToSelection(index);
+        if (this.store.selectedType === ContentType.Course) {
+          this.store.addCourseToSelection(index);
+        }
       }
     } else if (event.shiftKey) {
       // TODO: for later

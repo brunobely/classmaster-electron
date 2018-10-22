@@ -73,16 +73,20 @@ export class StoreService {
    *
    * @param course - The course to be added
    * @param position - The position in the sidebar to insert the course
+   *
+   * @returns The index of the newly inserted course
    */
-  addCourse(course: Course, position?: number) {
+  addCourse(course: Course, position?: number): number {
     if (position) {
       this.courses = [
         ...this.courses.slice(0, position),
         course,
         ...this.courses.slice(position)
       ];
+      return position;
     } else {
       this.courses = [...this.courses, course];
+      return this.courses.length - 1;
     }
   }
 

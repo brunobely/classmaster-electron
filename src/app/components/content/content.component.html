@@ -14,7 +14,7 @@
       <textarea
         #titleArea
         class="title"
-        placeholder="title"
+        placeholder="New Course"
         value="{{title()}}"
         [readOnly]="courseIndex() === -1"
         (blur)="updateTitle($event, titleArea.value)"

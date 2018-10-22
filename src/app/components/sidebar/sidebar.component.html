@@ -19,12 +19,13 @@
         [class.selected]="isCourseSelected(c)"
         [class.selectedTop]="isCourseSelectedTop(c)"
         [class.selectedBottom]="isCourseSelectedBottom(c)"
+        [class.contextMenuOpen]="contextMenuOpen[c]"
         (click)="onCourseSelect($event, c)"
-        (contextmenu)="openContextMenu($event, course)"
-      >{{course.title}}</button>
+        (contextmenu)="openContextMenu($event, c)"
+      >{{course.title || 'New Course'}}</button>
     </li>
 
-    <li *ngIf="staging" class="items-row staging-row">
+    <!-- <li *ngIf="staging" class="items-row staging-row">
       <input #staging
         type="text"
         id="staging"
@@ -34,7 +35,7 @@
         (keyup.enter)="onStagingSave($event, staging.value)"
         (keyup.escape)="onStagingCancel($event)"
       >
-    </li>
+    </li> -->
   </ul>
 
   <!-- <p *ngFor="let course of store.courses">{{course.title}}</p> -->

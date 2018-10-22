@@ -61,14 +61,40 @@
   background-color: lightgrey;
 }
 
+.sidebar button.contextMenuOpen {
+  border: 0 solid #0076ff;
+  border-left-width: 3px;
+  border-right-width: 3px;
+}
+
+// TODO: maybe make these the same
+// ! TODO: figure out how to stop button content from moving when border is drawn
+$selectedRadius: 3px;
+$contextOpenRadius: 5px;
+
+.sidebar button.contextMenuOpen:not(.selected) {
+  border-radius: $contextOpenRadius;
+  border-width: 3px;
+}
+
 .sidebar button.selectedTop {
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+  border-top-left-radius: $selectedRadius;
+  border-top-right-radius: $selectedRadius;
+}
+.sidebar button.selectedTop.contextMenuOpen {
+  border-top-left-radius: $contextOpenRadius;
+  border-top-right-radius: $contextOpenRadius;
+  border-top-width: 3px;
 }
 
 .sidebar button.selectedBottom {
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: $selectedRadius;
+  border-bottom-right-radius: $selectedRadius;
+}
+.sidebar button.selectedBottom.contextMenuOpen {
+  border-bottom-left-radius: $contextOpenRadius;
+  border-bottom-right-radius: $contextOpenRadius;
+  border-bottom-width: 3px;
 }
 
 .footer {

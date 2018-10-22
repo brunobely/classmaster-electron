@@ -79,6 +79,10 @@
   height: 100%;
 }
 
+.title::placeholder {
+  color: #888;
+}
+
 .content textarea:read-only {
   user-select: none;
   cursor: default;
