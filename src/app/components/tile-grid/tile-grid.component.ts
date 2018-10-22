@@ -10,6 +10,7 @@ export class TileGridComponent implements OnInit {
 
   @Input() assignments: Assignments;
 
+  // TODO: generalize this
   displayOrder: string[] = ['homework', 'exam', 'quiz'];
   columnIndices: number[];
 

@@ -32,6 +32,8 @@ import { IconBadgeComponent } from './components/icon-badge/icon-badge.component
 import { TileGridComponent } from './components/tile-grid/tile-grid.component';
 import { TileComponent } from './components/tile/tile.component';
 import { TileRowComponent } from './components/tile-row/tile-row.component';
+import { EmptyGridComponent } from './components/empty-grid/empty-grid.component';
+import { CourseViewComponent } from './components/course-view/course-view.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -43,6 +45,7 @@ library.add(fas.faStar);
 library.add(fas.faUniversity);
 library.add(fas.faCalendarAlt);
 library.add(fas.faPlus);
+library.add(fas.faSquare);
 
 @NgModule({
   declarations: [
@@ -56,7 +59,9 @@ library.add(fas.faPlus);
     IconBadgeComponent,
     TileGridComponent,
     TileComponent,
-    TileRowComponent
+    TileRowComponent,
+    EmptyGridComponent,
+    CourseViewComponent
   ],
   imports: [
     BrowserModule,

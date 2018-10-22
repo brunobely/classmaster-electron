@@ -1,4 +1,6 @@
 :host {
+  position: relative;
+
   flex: initial;
   height: 100%;
   width: 250px;
@@ -51,6 +53,9 @@
   overflow: hidden;
   text-overflow: ellipsis; // TODO: not working
 }
+.sidebar button.strong {
+  font-weight: 500;
+}
 
 .sidebar button.selected {
   background-color: lightgrey;
@@ -64,4 +69,51 @@
 .sidebar button.selectedBottom {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 4px 8px;
+  border-top: 1px solid lightgrey;
+
+  // background-color: red;
+}
+
+.footer .new-course {
+  font-size: 1.05em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-sizing: border-box;
+
+  background-color: transparent;
+  height: 32px;
+  line-height: 3px;
+  // vertical-align: middle;
+
+  // padding: 0 10px 0 5px; // use with fa-icon
+  padding: 0 10px 0 8px;
+}
+.footer .new-course:hover {
+  border: 1px solid lightgrey;
+}
+.footer .new-course:active {
+  background-color: lightgrey;
+}
+
+.plus {
+  font-size: 1.6em;
+  font-weight: 400;
+  height: 6px;
+  margin-right: 5px;
 }

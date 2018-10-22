@@ -1,20 +1,26 @@
 <div class="grid">
-  <div class="column" *ngFor="let i of columnIndices">
-    <ng-container *ngIf="i < displayOrder.length - 1">
-        <app-tile
-          [name]="displayOrder[i]"
-          [data]="assignments[displayOrder[i]]"
-        ></app-tile>
-        <app-tile
-          [name]="displayOrder[i+1]"
-          [data]="assignments[displayOrder[i+1]]"
-        ></app-tile>
-    </ng-container>
-    <ng-container *ngIf="i == displayOrder.length - 1">
-        <app-tile
-          [name]="displayOrder[i]"
-          [data]="assignments[displayOrder[i]]"
-        ></app-tile>
-    </ng-container>
-  </div>
+  <ng-container *ngIf="assignments">
+    <div class="column" *ngFor="let i of columnIndices">
+        <ng-container *ngIf="i < displayOrder.length - 1">
+            <app-tile
+              [name]="displayOrder[i]"
+              [data]="assignments[displayOrder[i]]"
+            ></app-tile>
+            <app-tile
+              [name]="displayOrder[i+1]"
+              [data]="assignments[displayOrder[i+1]]"
+            ></app-tile>
+        </ng-container>
+        <ng-container *ngIf="i == displayOrder.length - 1">
+            <app-tile
+              [name]="displayOrder[i]"
+              [data]="assignments[displayOrder[i]]"
+            ></app-tile>
+        </ng-container>
+      </div>
+  </ng-container>
+  <ng-container>
+    <!-- No assignments -->
+    <app-empty-grid></app-empty-grid>
+  </ng-container>
 </div>

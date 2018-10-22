@@ -1,0 +1,26 @@
+:host {
+  flex: auto;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+h2 {
+  margin: 10px 24px;
+  flex: none;
+}
+
+// TODO: when window gets too small, position them vertically instead
+.overview-container {
+  width: 55%;
+}
+.upcoming-container {
+  width: 45%;
+}
+.overview-container, .upcoming-container {
+  flex: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

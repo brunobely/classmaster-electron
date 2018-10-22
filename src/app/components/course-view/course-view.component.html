@@ -1,0 +1,11 @@
+<div class="overview-container">
+  <h2>Overview</h2>
+  <app-tile-grid [assignments]="selectedCourse().assignments"></app-tile-grid>
+</div>
+<div class="upcoming-container">
+  <!-- // TODO: maybe move this to the left and make selecting a row display info about that assignment? -->
+  <!-- // TODO: maybe display info about the assignment as an aside to the right -->
+  <h2>Upcoming</h2>
+  <!-- TODO: weeks() is getting called 4x, figure that out -->
+  <app-timeline [weeks]="selectedCourse().weeks()"></app-timeline>
+</div>

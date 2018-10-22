@@ -1,5 +1,6 @@
 export enum ContentType {
   Schedule,
-  Planning,
+  Today,
+  Upcoming,
   Course
 }

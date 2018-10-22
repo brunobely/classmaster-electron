@@ -18,6 +18,16 @@ export class CourseBadgeComponent implements OnChanges {
 
   ngOnChanges() {
     console.log('course badge ngOnChanges', this.department, this.code, this.accent);
+
+    if (this.accent) {
+      console.log('accent exists', this.accent);
+      console.log(this.accent.lighten);
+      console.log(this.accent.lighten(0.5));
+    } else {
+      console.log('accent does not exist', this.accent);
+      console.log(this.accent.lighten);
+      console.log(this.accent.lighten(0.5));
+    }
     this.computedStyle = {
       'border-color': this.accent.lighten(0.05),
       'color': this.accent.hex(),

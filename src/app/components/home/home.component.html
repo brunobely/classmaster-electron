@@ -1,5 +1,5 @@
 <div class="master-detail-container">
   <div class="title-bar"></div>
-  <app-sidebar style="padding-top: 22px" [items]="contentItems" [courses]="courses" [selected]="selectedItems" (select)="changeSelection($event)"></app-sidebar>
-  <app-content style="padding-top: 22px" [selected]="selectedItems[0]" (update)="updateItem($event)"></app-content>
+  <app-sidebar style="padding-top: 22px" [items]="contentItems" (select)="changeSelection($event)"></app-sidebar>
+  <app-content style="padding-top: 22px"></app-content>
 </div>

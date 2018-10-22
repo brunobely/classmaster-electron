@@ -11,22 +11,24 @@ import { extendMoment } from 'moment-range';
 const moment = extendMoment(Moment);
 
 export class Course {
-  id: string;
-  title: string;
-  accent: Color;
-  code?: string;
-  department?: string;
-  assignments?: Assignments;
-  icon?: Icon;
 
-  constructor(id: string, title: string, accent: Color, code?: string, department?: string, assignments?: Assignments, icon?: Icon) {
-    this.id = id;
-    this.title = title;
-    this.accent = accent;
-    this.code = code;
-    this.department = department;
-    this.assignments = assignments;
-    this.icon = icon;
+  constructor(
+    public id: string,
+    public title: string,
+    public accent: Color,
+    public code?: string,
+    public department?: string,
+    public assignments?: Assignments,
+    public icon?: Icon) {
+  }
+
+  static fromJSON(json: any): Course {
+    const accent = Color({
+      r: json.accent.color[0],
+      g: json.accent.color[1],
+      b: json.accent.color[2],
+    });
+    return new Course(json.id, json.title, accent, json.code, json.department, json.assignments, json.icon);
   }
 
   // TODO: make this into a calculated property that changes with get/set to assignments?

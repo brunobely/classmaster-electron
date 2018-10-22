@@ -1,7 +1,7 @@
 :host {
   flex: auto;
 
-  height: 100%;
+  height: 100vh;
 
   background-color: white;
 
@@ -10,46 +10,53 @@
           box-sizing: border-box;
 }
 
+.content {
+  width: 100%;
+  height: 100%; // was causing the textarea to have 0 height for some reason. also not needed?
+  display: flex;
+}
+
 .badge {
   // FIXME: grows when window grows too much
   flex: initial;
   box-sizing: border-box;
   // FIXME: was 50.6px before. breaks (grows to the right) with longer text. figure this out
-  width: 64.6px; // TODO: might have to make this more general if 44px isn't hard-coded for title height
+  // width: 64.6px; // TODO: might have to make this more general if 44px isn't hard-coded for title height
   // (50.6px ends up being 44 who knows why...)
+  height: 100%;
   margin: 2px 10px;
   padding: 1px;
 }
 
-.header {
-  display: flex;
-  // // padding: 35px 50px 0 50px;
-  height: 40px;
-  margin: 20px 0;
-  flex: initial;
-}
-
-.content {
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
-
 .main {
   flex: auto;
-  height: 100%;
+  // height: 100%;
   box-sizing: border-box;
   padding: 10px 35px;
   display: flex;
   flex-direction: column;
 }
 
-.body {
-  flex: auto;
+.header {
+  flex: none;
+  // flex: initial;
+  // flex-shrink: 0;
+  // // padding: 35px 50px 0 50px;
+  height: 40px;
+  margin: 20px 0;
   display: flex;
-  justify-content: center;
+}
+
+// https://stackoverflow.com/questions/36247140/why-dont-flex-items-shrink-past-content-size
+.body {
+  // Doesn't solve the problem, though. I want the timeline to scroll, not the whole body.
+  // min-width: 0;
+  // min-height: 0;
+  // overflow: auto;
+
   width: 100%;
   height: 100%;
+  flex: auto;
 }
 
 .content textarea.title {
@@ -76,24 +83,3 @@
   user-select: none;
   cursor: default;
 }
-
-h2 {
-  margin: 10px 24px;
-  flex: initial;
-}
-
-// TODO: when window gets too small, position them vertically instead
-.overview-container {
-  flex: auto;
-  width: 55%;
-  display: flex;
-  flex-direction: column;
-}
-
-.upcoming-container {
-  flex: auto;
-  width: 45%;
-  display: flex;
-  flex-direction: column;
-}
-

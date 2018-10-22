@@ -1,39 +1,32 @@
-<div class="content" *ngIf="selected">
+<div class="content">
 
+  <!-- ! TODO: break this up into schedule, today, upcoming, course, multi-course -->
   <div class="main">
     <div class="header">
-      <div class="badge" [ngSwitch]="selected.contentType">
+      <div class="badge">
         <!-- TODO: might wanna generalize this to accept text or an icon, choose border, etc? -->
-        <app-course-badge *ngSwitchCase="ContentType.Course" [department]="course.department" [code]="course.code" [accent]="course.accent"></app-course-badge>
-        <app-icon-badge *ngSwitchDefault [icon]="selected.icon" [accent]="selected.accent"></app-icon-badge>
+        <!-- <app-course-badge *ngIf="courseIndex() >= 0" [department]="course().department" [code]="course().code" [accent]="course().accent"></app-course-badge> -->
+        <!-- <app-icon-badge *ngIf="courseIndex() === -1" [icon]="icon()" [accent]="accent()"></app-icon-badge> -->
+        <app-icon-badge [icon]="icon()" [accent]="accent()"></app-icon-badge>
       </div>
       <!-- TODO: might wanna add a readOnly property to the content item -->
       <!-- TODO: stop the title from changing on the sidebar when typing, only change on enter or blur -->
       <textarea
         #titleArea
         class="title"
-        [(ngModel)]="selected.title"
         placeholder="title"
-        [readOnly]="selected.contentType !== ContentType.Course"
-        (blur)="updateTitle($event, selected)"
+        value="{{title()}}"
+        [readOnly]="courseIndex() === -1"
+        (blur)="updateTitle($event, titleArea.value)"
         (keydown.enter)="$event.preventDefault()"
-        (keyup.enter)="updateTitle($event, selected)"
-        oninput="this.style.height = '';this.style.height = this.scrollHeight - 4 + 'px'"
+        (keyup.enter)="updateTitle($event, titleArea.value)"
       ></textarea>
+      <!-- ^ oninput="this.style.height = '';this.style.height = this.scrollHeight - 4 + 'px'" -->
     </div>
 
-    <div *ngIf="course" class="body">
-      <div class="overview-container">
-        <h2>Overview</h2>
-        <app-tile-grid [assignments]="course.assignments"></app-tile-grid>
-      </div>
-      <div class="upcoming-container">
-        <!-- // TODO: maybe move this to the left and make selecting a row display info about that assignment? -->
-        <!-- // TODO: maybe display info about the assignment as an aside to the right -->
-        <h2>Upcoming</h2>
-        <!-- TODO: weeks() is getting called 4x, figure that out -->
-        <app-timeline [weeks]="course.weeks()"></app-timeline>
-      </div>
+    <!-- TODO: maybe course-CONTENT? -->
+    <div class="body">
+      <app-course-view *ngIf="store.selectedType === ContentType.Course && store.selectedCourses.length === 1"></app-course-view>
     </div>
   </div>
 

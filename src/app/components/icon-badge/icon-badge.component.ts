@@ -18,6 +18,7 @@ export class IconBadgeComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges() {
+    console.log('accent', this.accent);
     this.computedStyle = {
       'border-color': this.accent.lighten(0.05),
       'color': this.accent.hex().toString(),

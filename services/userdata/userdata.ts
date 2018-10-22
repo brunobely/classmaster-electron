@@ -46,8 +46,9 @@ export function init() {
           console.log('reading:', file);
           // TODO: is it bad to do this synchronously? otherwise how to know all are done?
           //       since it's in the main process it should be fine...? keep an eye on it
-          const course = fse.readJSONSync(path.join(coursesPath, file));
+          const course = Course.fromJSON(fse.readJSONSync(path.join(coursesPath, file)));
           console.log('got:', course);
+          console.log(course.accent instanceof require('color'));
           courses.push(course);
         });
 
@@ -64,21 +65,24 @@ export function init() {
   ipcMain.on('load:sidebar-order', (event, arg) => {
     fse.readJSON(sidebarPath, (err, data) => {
       if (err) {
+        // TODO: maybe send back an error to the renderer process
         console.log(err);
       } else {
-        event.sender.send('reply:load:sidebar-order', data.order);
+        event.sender.send('reply:load:sidebar-order', { order: data.order });
       }
     });
   });
 
-  // Save the course order for the sidebar (IDs only)
-  ipcMain.on('save:sidebar-order', (event, arg) => {
-    fse.outputJSON(sidebarPath, arg.order, err => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Wrote sidebar order successfully!');
-      }
+  // Update the course order for the sidebar (IDs only)
+  ipcMain.on('update:sidebar-order', (event, arg) => {
+    fse.readJSON(sidebarPath, (readErr, data) => {
+      fse.outputJSON(sidebarPath, { ...data, order: arg.order }, err => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Wrote sidebar order successfully!');
+        }
+      });
     });
   });
 }

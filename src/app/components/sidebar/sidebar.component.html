@@ -1,37 +1,52 @@
 <div *ngIf="items">
   <ul class="sidebar" *ngFor="let section of items; let s = index">
-    <p *ngIf="s === 2" style="text-align: right; margin: 5px; font-size: smaller; color: #777">Quick selection buttons</p>
     <li *ngFor="let row of section; let r = index" class="items-row">
       <button
-        [class.selected]="isSelected(row)"
-        [class.selectedTop]="isSelectedTop(row, s, r)"
-        [class.selectedBottom]="isSelectedBottom(row, s, r)"
-        (click)="onSelect($event, row, s, r)"
+        class="strong"
+        [class.selected]="isItemSelected(row)"
+        [class.selectedTop]="isItemSelected(row)"
+        [class.selectedBottom]="isItemSelected(row)"
+        (click)="onItemSelect($event, row.contentType, s, r)"
       >{{row.title}}</button>
     </li>
-
-    <li *ngIf="staging && s === items.length-1" class="items-row staging-row">
-        <input #staging
-          type="text"
-          id="staging"
-          name="staging"
-          placeholder="New Course"
-          (blur)="onStagingBlur($event, staging.value)"
-          (keyup.enter)="onStagingSave($event, staging.value)"
-          (keyup.escape)="onStagingCancel($event)"
-        >
-      </li>
   </ul>
 
-  <p *ngFor="let course of courses">{{course.title}}</p>
+  <ul class="sidebar">
+    <!-- Implement this p tag lol -->
+    <p *ngIf="store.courses && store.courses.length > 0" style="text-align: right; margin: 5px; font-size: smaller; color: #777">Quick selection buttons</p>
+    <li *ngFor="let course of store.courses; let c = index" class="items-row">
+      <button
+        [class.selected]="isCourseSelected(c)"
+        [class.selectedTop]="isCourseSelectedTop(c)"
+        [class.selectedBottom]="isCourseSelectedBottom(c)"
+        (click)="onCourseSelect($event, c)"
+        (contextmenu)="openContextMenu($event, course)"
+      >{{course.title}}</button>
+    </li>
+
+    <li *ngIf="staging" class="items-row staging-row">
+      <input #staging
+        type="text"
+        id="staging"
+        name="staging"
+        placeholder="New Course"
+        (blur)="onStagingBlur($event, staging.value)"
+        (keyup.enter)="onStagingSave($event, staging.value)"
+        (keyup.escape)="onStagingCancel($event)"
+      >
+    </li>
+  </ul>
+
+  <!-- <p *ngFor="let course of store.courses">{{course.title}}</p> -->
 
   <div class="footer">
-    <button class="add" (click)="onAdd($event)">
-      <fa-icon
+    <button class="new-course" (click)="onNewCourse($event)">
+      <!-- <fa-icon
         [icon]="['fas', 'plus']"
-        size="2x"
+        size="xs"
         [fixedWidth]="true"
-      ></fa-icon>
+      ></fa-icon> -->
+      <span class="plus">+</span> New Course
     </button>
   </div>
 </div>

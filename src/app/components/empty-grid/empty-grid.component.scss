@@ -1,0 +1,72 @@
+:host {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+p {
+  text-align: center;
+  color: #444;
+}
+
+.small {
+  color: #999;
+  font-size: small;
+  text-align: center;
+
+  // TODO: can't figure out how to vertically align the cmd symbol with the +N
+  //       figure that out and also use CTRL instead when on a windows computer
+  //       maybe make a component for keyboard shortcuts, it would be easier to
+  //       handle the logic and display (set display: inline-*)
+  // display: inline-flex;
+  // justify-content: center;
+  // align-items: center;
+  // margin-left: 2px;
+}
+
+.cmd-symbol {
+  // font-size: 0.8em;
+  font-size: 1.3em;
+}
+.shortcut {
+  // font-family: 'Courier New', Courier, monospace;
+  font-family: Menlo, Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  // font-size: 0.95em;
+
+  // border: 1px solid #9fe4ff;
+  // background-color: #d9f4ff;
+  // // text-shadow: 0 1px 0 #222;
+  // padding: 2px;
+  // border-radius: 3px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 30px;
+
+  appearance: none;
+  outline: none;
+  border: none;
+  // background-color: rgb(43, 135, 255);
+  background-color: #0076ff;
+  border-radius: 7px;
+  // box-shadow: 0 3px 15px rgba(43, 135, 255, 0.5);
+  box-shadow: 0 4px 14px 0 #0076ff63;
+
+  color: #fff;
+  font-size: 1.05em;
+  font-weight: 500;
+
+  transition: all 0.2s ease-out;
+}
+button:hover {
+  // background-color: lighten(rgb(43, 135, 255), 5);
+  background-color: lighten(#0076ff, 5);
+}
+button:active {
+  // background-color: darken(rgb(43, 135, 255), 10);
+  background-color: darken(#0076ff, 10);
+}
