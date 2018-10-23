@@ -21,6 +21,7 @@ function createWindow() {
     width: size.width,
     height: size.height,
     titleBarStyle: 'hidden',
+    icon: path.join(__dirname, 'assets/icons/png/1024x1024.png')
   });
 
   if (serve) {
