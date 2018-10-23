@@ -18,6 +18,8 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
+              "src/icon.icns",
+              "src/icon.ico",
               "src/favicon.ico",
               "src/favicon.png",
               "src/favicon.icns",
@@ -99,6 +101,8 @@
             ],
             "assets": [
               "src/assets",
+              "src/icon.icns",
+              "src/icon.ico",
               "src/favicon.ico",
               "src/favicon.png",
               "src/favicon.icns",

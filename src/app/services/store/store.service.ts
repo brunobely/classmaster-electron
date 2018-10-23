@@ -90,7 +90,17 @@ export class StoreService {
     }
   }
 
+  getFirstSelected(): Course {
+    // TODO: refactor so that courses and selectedCourses are initialized with empty arrays
+    if (this.courses && this.selectedCourses) {
+      return this.courses[this.selectedCourses[0]];
+    }
+    return null;
+  }
+
   updateCourseTitle(index: number, title: string) {
+    // BUG: saw an instance where this.courses[index] returned undefined. Maybe I clicked the UI too fast
+    //      but it would be nice to find out how to reproduce it.
     this.courses[index].title = title;
   }
 

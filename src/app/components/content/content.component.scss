@@ -79,6 +79,9 @@
   height: 100%;
 }
 
+.title::selection {
+  background-color: #ff63477f;
+}
 .title::placeholder {
   color: #888;
 }

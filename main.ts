@@ -3,43 +3,58 @@ import * as path from 'path';
 import * as url from 'url';
 
 import * as userdata from './services/userdata/userdata';
+import * as windows from './services/windows/windows';
 
-let win, serve;
+let win, serve, pathToIndex;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
 function createWindow() {
 
-  const electronScreen = screen;
+  // const electronScreen = screen; // why?
   // const size = electronScreen.getPrimaryDisplay().workAreaSize;
+
+  // Default is to center the window, so this is unnecessary
+  // Does this return the display currently active or display number 1?
+  // const screenSize = electronScreen.getPrimaryDisplay().workAreaSize;
   const size = { width: 1050, height: 600 };
 
   // Create the browser window.
   win = new BrowserWindow({
-    x: 0,
-    y: 0,
+    // Default is to center the window, so this is unnecessary
+    // x: (screenSize.width - size.width) / 2,
+    // y: (screenSize.height - size.height) / 2,
     width: size.width,
     height: size.height,
     titleBarStyle: 'hidden',
-    icon: path.join(__dirname, 'assets/icons/png/1024x1024.png')
+    icon: path.join(__dirname, 'assets/icons/png/1024x1024.png'), // TODO: might need to change this later if changed elsewhere
+    show: false,
   });
 
   if (serve) {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
     });
-    win.loadURL('http://localhost:4200');
+    pathToIndex = 'http://localhost:4200';
   } else {
-    win.loadURL(url.format({
+    pathToIndex = url.format({
       pathname: path.join(__dirname, 'dist/index.html'),
       protocol: 'file:',
       slashes: true
-    }));
+    });
   }
 
-  // Optional: open DevTools
-  // win.webContents.openDevTools();
+  win.loadURL(pathToIndex);
 
+  // Optional: open DevTools
+  win.webContents.openDevTools(/*{ mode: 'detach' }*/);
+
+  // TODO: this might get slow later, so maybe find another solution. How does Discord do their splash animation?
+  //       Also make changes elsewhere in the app where this is used.
+  // See: https://electronjs.org/docs/api/browser-window#showing-window-gracefully
+  win.once('ready-to-show', () => {
+    win.show();
+  });
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store window
@@ -58,6 +73,7 @@ try {
   app.on('ready', () => {
     createWindow();
     userdata.init();
+    windows.init(win, pathToIndex);
   });
 
   // Quit when all windows are closed.
