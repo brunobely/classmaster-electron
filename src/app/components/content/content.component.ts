@@ -21,6 +21,7 @@ import { StoreService } from '../../services/store/store.service';
 import { Icon } from '../../icon';
 
 import * as Color from 'color';
+import { HeaderTextareaComponent } from '../header-textarea/header-textarea.component';
 
 @Component({
   selector: 'app-content',
@@ -31,7 +32,7 @@ export class ContentComponent implements OnInit, OnChanges, AfterViewChecked {
   ContentType = ctType.ContentType; // need this so we can reference ContentType in template
 
   // https://stackoverflow.com/questions/48226868/document-getelementbyid-replacement-in-angular4-typescript/48226924
-  @ViewChild('titleArea') titleArea: ElementRef;
+  @ViewChild('titleArea') titleArea: HeaderTextareaComponent; // Is this correct or should I use `ElementRef`?
 
   @Output() update = new EventEmitter<CourseItem>();
 
@@ -49,7 +50,7 @@ export class ContentComponent implements OnInit, OnChanges, AfterViewChecked {
   // TODO: why does this get called once per change in sidebar but 4 times in the beginning?
   ngAfterViewChecked(): void {
     if (!this.title()) {
-      this.titleArea.nativeElement.focus();
+      this.titleArea.focus();
     }
   }
 
@@ -82,8 +83,8 @@ export class ContentComponent implements OnInit, OnChanges, AfterViewChecked {
         return 'Upcoming';
       case ContentType.Course:
         console.log('DDDDDDDDDDDDDDDD');
-        console.log(this.course());
-        console.log(this.course().title);
+        console.log('this.course()', this.course());
+        console.log('this.course().title', this.course().title);
 
         return this.course().title;
     }
@@ -98,14 +99,9 @@ export class ContentComponent implements OnInit, OnChanges, AfterViewChecked {
     return Color('#777777');
   }
 
-  updateTitle(e, title: string) {
-    e.preventDefault();
-    console.log(e, title);
-
-    // this.update.emit(courseItem); // TODO: maybe trim the title?
+  updateTitle(title) {
+    console.log('updateTitle', title);
     this.store.updateCourseTitle(this.courseIndex(), title);
-
-    e.target.blur();
 
     // this.course.title = courseItem.title;
     // this.userDataService.updateCourse(this.course);

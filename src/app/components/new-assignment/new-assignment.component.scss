@@ -1,9 +1,15 @@
-.new-assignment-container {
-  height: 100vh;
-  width: 100vw;
+:host {
+  width: 100%;
+  height: 100%;
+}
+
+.new-assignment-window {
+  // height: 100vh;
+  // width: 100vw;
+  width: 100%;
+  height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
 }
 
 // TODO: could make this into a component. Also substitute everywhere else.
@@ -19,6 +25,87 @@
   -webkit-app-region: drag;
 }
 
-p {
-  text-align: center;
+.body {
+  padding: 25px 25px 10px 25px;
+
+  background-color: lightcoral;
+
+  display: flex;
+  flex: 1;
+  width: 100%;
+
+  box-sizing: border-box;
+}
+
+.left, .right {
+  flex: none;
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 5px;
+  box-sizing: border-box;
+}
+.left {
+  background-color: lightgreen;
+
+  border-right: 1px solid lightgrey;
+  padding-right: 10px;
+}
+.right {
+  background-color: lightcyan;
+
+  padding-left: 10px;
+}
+
+.left-header {
+  flex: auto;
+  width: 100%;
+  height: 0; // Needs to be set so that the textarea in `app-header-textarea` can expand
+  max-height: 33%;
+
+  background-color: cornflowerblue;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  flex: inherit;
+  width: 100%;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: lightskyblue;
+}
+
+
+.notes {
+  flex: auto;
+  font-size: 1em;
+  caret-color: tomato; // TODO: figure out how to make it a bit thicker
+
+  border: none;
+  outline: none;
+
+  word-break: break-word; // doesn't change anything?
+  resize: none;
+
+  // TODO: expand it https://alistapart.com/article/expanding-text-areas-made-elegant
+
+  box-sizing: border-box;
+  width: 100%;
+  height: 0;
+}
+
+.notes::selection {
+  background-color: #ff63477f;
+}
+.title::placeholder {
+  color: #888;
 }

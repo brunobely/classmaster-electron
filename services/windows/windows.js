@@ -5,10 +5,11 @@ var path = require("path");
 var auxWindows = [];
 function init(mainWindow, pathToIndex) {
     electron_1.ipcMain.on('window:open:new-assignment', function (event, arg) {
+        console.log('window:open:new-assignment');
         // Default is to center the window, so this is unnecessary
         // const mainBounds = mainWindow.getBounds();
         // const primaryDisplay: Display = screen.getDisplayNearestPoint({ x: mainBounds.x, y: mainBounds.y });
-        var size = { width: 400, height: 250 };
+        var size = { width: 560, height: 400 };
         // Create the browser window.
         var win = new electron_1.BrowserWindow({
             // TODO: pass better parameters for x/y (maybe middle of main window? maybe middle of screen?)
@@ -17,10 +18,11 @@ function init(mainWindow, pathToIndex) {
             // y: (primaryDisplay.workAreaSize.height - size.height) / 2,
             width: size.width,
             height: size.height,
-            titleBarStyle: 'hidden',
+            // titleBarStyle: 'hidden',
             icon: path.join(__dirname, 'assets/icons/png/1024x1024.png'),
             show: false,
             resizable: false,
+            frame: false,
         });
         // TODO: maybe use url.format here, and put 'test' under the `hash` property
         win.loadURL(path.join(pathToIndex, '#', 'new-assignment'));
@@ -28,6 +30,7 @@ function init(mainWindow, pathToIndex) {
         auxWindows.push(win);
         // Optional: open DevTools
         win.webContents.openDevTools({ mode: 'detach' });
+        // TODO: this takes quite a bit. Might want to use a modal view inside the app window
         win.once('ready-to-show', function () {
             win.show();
         });

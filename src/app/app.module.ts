@@ -35,6 +35,7 @@ import { TileRowComponent } from './components/tile-row/tile-row.component';
 import { EmptyGridComponent } from './components/empty-grid/empty-grid.component';
 import { CourseViewComponent } from './components/course-view/course-view.component';
 import { NewAssignmentComponent } from './components/new-assignment/new-assignment.component';
+import { HeaderTextareaComponent } from './components/header-textarea/header-textarea.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -63,7 +64,8 @@ library.add(fas.faSquare);
     TileRowComponent,
     EmptyGridComponent,
     CourseViewComponent,
-    NewAssignmentComponent
+    NewAssignmentComponent,
+    HeaderTextareaComponent
   ],
   imports: [
     BrowserModule,

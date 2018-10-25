@@ -1,5 +1,41 @@
-<div class="new-assignment-container">
-  <div class="title-bar"></div>
+<div class="new-assignment-window">
+  <!-- Unneeded while modal -->
+  <!-- <div class="title-bar"></div> -->
 
-  <p>Let's create a new assignment</p>
+  <div class="body">
+    <div class="left">
+      <div class="left-header">
+        <!-- TODO: might want to modify this component so that we can user keydown.enter to submit the form -->
+        <app-header-textarea
+          #titleArea
+          [size]="'normal'"
+          [placeholder]="'New Assignment'"
+          [value]="title"
+          [readOnly]="false"
+          (update)="updateTitle($event)"
+        ></app-header-textarea>
+      </div>
+
+      <!-- Notes -->
+      <textarea
+        #notesArea
+        class="notes"
+        placeholder="Notes"
+        value=""
+      ></textarea>
+
+      <p>Type</p>
+      <input type="text" name="type" id="type">
+      <p>Course: coursename</p>
+    </div>
+    <div class="right">
+      <p>Calendar</p>
+      <input type="datetime" name="dueDate" id="dueDate">
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Cancel</p>
+    <p>Add</p>
+  </div>
 </div>

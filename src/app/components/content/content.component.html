@@ -10,21 +10,18 @@
         <app-icon-badge [icon]="icon()" [accent]="accent()"></app-icon-badge>
       </div>
       <!-- TODO: might wanna add a readOnly property to the content item -->
-      <!-- TODO: stop the title from changing on the sidebar when typing, only change on enter or blur -->
-      <textarea
+      <app-header-textarea
         #titleArea
-        class="title"
-        placeholder="New Course"
-        value="{{title()}}"
+        [size]="'large'"
+        [placeholder]="'New Course'"
+        [value]="title()"
         [readOnly]="courseIndex() === -1"
-        (blur)="updateTitle($event, titleArea.value)"
-        (keydown.enter)="$event.preventDefault()"
-        (keyup.enter)="updateTitle($event, titleArea.value)"
-      ></textarea>
+        (update)="updateTitle($event)"
+      ></app-header-textarea>
       <!-- ^ oninput="this.style.height = '';this.style.height = this.scrollHeight - 4 + 'px'" -->
     </div>
 
-    <!-- TODO: maybe course-CONTENT? -->
+    <!-- TODO: maybe app-course-CONTENT? -->
     <div class="body">
       <app-course-view *ngIf="store.selectedType === ContentType.Course && store.selectedCourses.length === 1"></app-course-view>
     </div>

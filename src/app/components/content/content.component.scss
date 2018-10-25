@@ -58,35 +58,3 @@
   height: 100%;
   flex: auto;
 }
-
-.content textarea.title {
-  flex: auto;
-
-  font-size: 2em;
-  font-weight: 700;
-  caret-color: tomato; // TODO: figure out how to make it a bit thicker
-
-  border: none;
-  outline: none;
-
-  word-break: break-word;
-  resize: none;
-  // TODO: expand it https://alistapart.com/article/expanding-text-areas-made-elegant
-  // also remove the oninput method (doesn't work for resizing or when changing selection on sidebar)
-  // background-color: lightblue;
-
-  width: 100%;
-  height: 100%;
-}
-
-.title::selection {
-  background-color: #ff63477f;
-}
-.title::placeholder {
-  color: #888;
-}
-
-.content textarea:read-only {
-  user-select: none;
-  cursor: default;
-}

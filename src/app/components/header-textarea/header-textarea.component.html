@@ -1,0 +1,12 @@
+<!-- TODO: check if it's ok to have multiple #area (same name) in the same document, just in case -->
+<textarea
+  #area
+  class="title"
+  [ngStyle]="computedStyle"
+  placeholder="{{placeholder}}"
+  value="{{value}}"
+  [readOnly]="readOnly"
+  (blur)="onUpdate($event, area.value)"
+  (keydown.enter)="$event.preventDefault()"
+  (keyup.enter)="onUpdate($event, area.value)"
+></textarea>

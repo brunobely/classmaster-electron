@@ -13,4 +13,12 @@
 
 <!-- TODO: "hit" vs "press"? -->
 <!-- TODO: link to keyboard shortcuts page/modal/window -->
-<p class="small">(or hit <span class="shortcut"><span class="cmd-symbol">⌘</span>+N</span>)</p>
+<p class="small">(or hit <span class="shortcut"><span class="cmd-symbol">⌘</span><span style="font-size: 1.25em; font-weight: 600;">+</span>N</span>)</p>
+
+<!-- New Assignment Modal -->
+<!-- TODO: animate this in/out -->
+<div *ngIf="showNewAssignmentModal" class="modal" (click)="onModalOverlayClick($event)">
+  <div class="container" (click)="$event.stopPropagation()">
+    <app-new-assignment></app-new-assignment>
+  </div>
+</div>
