@@ -7,4 +7,6 @@ export class Assignment {
   title: string;
   dueDate: Date;
   type: string;
+
+  // TODO: maybe a constructor?
 }

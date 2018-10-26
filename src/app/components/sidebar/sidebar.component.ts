@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output, AfterViewChecked, DoCheck, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, /*AfterViewChecked, */DoCheck, ChangeDetectorRef } from '@angular/core';
 
 import { ContentItem } from '../../content-item';
 import { CourseItem } from '../../course-item';

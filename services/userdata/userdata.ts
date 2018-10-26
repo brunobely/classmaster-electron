@@ -13,7 +13,17 @@ export function init() {
   console.log('__dirname', __dirname);
 
   fse.mkdirs(coursesPath);
-  fse.createFile(sidebarPath);
+  fse.exists(sidebarPath, exists => {
+    if (!exists) {
+      fse.outputJSON(sidebarPath, { order: [] }, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Created sidebar order successfully!');
+        }
+      });
+    }
+  });
 
   ipcMain.on('test', (event, arg) => {
     console.log('arg', arg);
@@ -30,6 +40,35 @@ export function init() {
         console.log(err);
       } else {
         console.log(`Wrote ${arg.course.title}-${arg.course.id}.course successfully!`);
+      }
+    });
+  });
+
+  ipcMain.on('update:course', (event, arg) => {
+    console.log('update:course, arg:', arg);
+
+    fse.readdir(coursesPath, (err, files) => {
+      if (err) {
+        console.log(err);
+      } else {
+        files.forEach(file => {
+          if (file.endsWith(`${arg.course.id}.course`)) {
+            const title = file.substring(0, file.indexOf(`${arg.course.id}.course`));
+            let newPath = file;
+            if (title !== arg.course.title) {
+              newPath = path.join(coursesPath, `${arg.course.title}-${arg.course.id}.course`);
+              fse.renameSync(file, newPath);
+            }
+            fse.outputJSON(newPath, arg.course, outputErr => {
+              // TODO: maybe reply with a success or error message?
+              if (outputErr) {
+                console.log(outputErr);
+              } else {
+                console.log(`Updated ${arg.course.title}-${arg.course.id}.course successfully!`);
+              }
+            });
+          }
+        });
       }
     });
   });
@@ -80,7 +119,7 @@ export function init() {
         if (err) {
           console.log(err);
         } else {
-          console.log('Wrote sidebar order successfully!');
+          console.log('Updated sidebar order successfully!');
         }
       });
     });

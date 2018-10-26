@@ -14,3 +14,50 @@ html, body {
   // TODO: is this the right way to set the default font size for the body?
   font-size: 14px;
 }
+
+$button-color: rgb(204, 204, 204);
+$button-color-primary: #0076ff;
+.btn {
+  margin-top: 10px;
+  margin-right: 5px;
+  margin-bottom: 14px;
+  margin-left: 5px;
+  padding: 10px 30px;
+
+  appearance: none;
+  outline: none;
+  border: none;
+  border-radius: 7px;
+
+  background-color: $button-color;
+  box-shadow: 0 4px 14px 0 rgba(148, 148, 148, 0.4);
+
+  color: #222;
+  font-size: 1.05rem;
+  font-weight: 500;
+
+  transition: all 0.2s ease-out;
+}
+.btn:hover {
+  background-color: lighten($button-color, 5);
+  box-shadow: 0 4px 14px 0 rgba(lighten($button-color, 5), 0.4);
+}
+.btn:active {
+  background-color: darken($button-color, 10);
+  box-shadow: 0 4px 14px 0 rgba(darken($button-color, 10), 0.4);
+}
+
+
+.btn-primary {
+  color: #fff;
+  background-color: $button-color-primary;
+  box-shadow: 0 4px 14px 0 #0076ff63;
+}
+.btn-primary:hover {
+  background-color: lighten($button-color-primary, 5);
+  box-shadow: 0 4px 14px 0 rgba(lighten($button-color-primary, 5), 0.4);
+}
+.btn-primary:active {
+  background-color: darken($button-color-primary, 10);
+  box-shadow: 0 4px 14px 0 rgba(darken($button-color-primary, 10), 0.4);
+}

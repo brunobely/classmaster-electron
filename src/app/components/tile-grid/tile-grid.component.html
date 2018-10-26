@@ -1,25 +1,26 @@
 <div class="grid">
-  <ng-container *ngIf="assignments">
+  <!-- do I need to check displayOrder()? Course is supposed to always keep it synced with assignments -->
+  <ng-container *ngIf="assignments() && order">
     <div class="column" *ngFor="let i of columnIndices">
-        <ng-container *ngIf="i < displayOrder.length - 1">
+        <ng-container *ngIf="i < Object.keys(assignments()).length - 1">
             <app-tile
-              [name]="displayOrder[i]"
-              [data]="assignments[displayOrder[i]]"
+              [name]="order[i]"
+              [data]="assignments()[order[i]]"
             ></app-tile>
             <app-tile
-              [name]="displayOrder[i+1]"
-              [data]="assignments[displayOrder[i+1]]"
+              [name]="order[i+1]"
+              [data]="assignments()[order[i+1]]"
             ></app-tile>
         </ng-container>
-        <ng-container *ngIf="i == displayOrder.length - 1">
+        <ng-container *ngIf="i == Object.keys(assignments()).length - 1">
             <app-tile
-              [name]="displayOrder[i]"
-              [data]="assignments[displayOrder[i]]"
+              [name]="order[i]"
+              [data]="assignments()[order[i]]"
             ></app-tile>
         </ng-container>
       </div>
   </ng-container>
-  <ng-container>
+  <ng-container *ngIf="!assignments() || !order">
     <!-- No assignments -->
     <app-empty-grid></app-empty-grid>
   </ng-container>

@@ -28,7 +28,7 @@
 .body {
   padding: 25px 25px 10px 25px;
 
-  background-color: lightcoral;
+  // background-color: lightcoral;
 
   display: flex;
   flex: 1;
@@ -75,13 +75,13 @@
 .footer {
   flex: inherit;
   width: 100%;
-  height: 60px;
+  height: 75px;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 
-  background-color: lightskyblue;
+  // background-color: lightskyblue;
 }
 
 
@@ -108,4 +108,8 @@
 }
 .title::placeholder {
   color: #888;
+}
+
+#cancel-new-assignment-button, #add-new-assignment-button {
+  width: 150px;
 }

@@ -4,6 +4,7 @@
 <!-- <p>No assignments here yet.</p> -->
 <!-- <p>Nothing here yet.</p> -->
 <button
+  class="btn btn-primary"
   type="button"
   name="add-assignment"
   id="add-assignment"
@@ -16,9 +17,11 @@
 <p class="small">(or hit <span class="shortcut"><span class="cmd-symbol">⌘</span><span style="font-size: 1.25em; font-weight: 600;">+</span>N</span>)</p>
 
 <!-- New Assignment Modal -->
+<!-- TODO: make this into a component -->
+<!-- TODO: dismiss with ESC -->
 <!-- TODO: animate this in/out -->
 <div *ngIf="showNewAssignmentModal" class="modal" (click)="onModalOverlayClick($event)">
   <div class="container" (click)="$event.stopPropagation()">
-    <app-new-assignment></app-new-assignment>
+    <app-new-assignment [dismiss]="dismissModal.bind(this)"></app-new-assignment>
   </div>
 </div>

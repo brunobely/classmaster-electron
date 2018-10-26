@@ -19,23 +19,53 @@
       <!-- Notes -->
       <textarea
         #notesArea
+        id="new-assignment-notes"
+        name="new-assignment-notes"
         class="notes"
         placeholder="Notes"
         value=""
       ></textarea>
 
       <p>Type</p>
-      <input type="text" name="type" id="type">
-      <p>Course: coursename</p>
+      <input
+        id="new-assignment-type"
+        name="new-assignment-type"
+        type="text"
+        [(ngModel)]="type"
+      >
+
+      <!-- TODO: make this a picker -->
+      <!-- TODO: add the course icon in this picker too -->
+      <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">Course:<br>{{store.getFirstSelected().title}}</p>
     </div>
     <div class="right">
       <p>Calendar</p>
-      <input type="datetime" name="dueDate" id="dueDate">
+      <input
+        id="new-assignment-duedate"
+        name="new-assignment-duedate"
+        type="date"
+        [(ngModel)]="dueDate"
+      >
+
+      <!-- TODO: optional due time. Might have to change the model slightly -->
     </div>
   </div>
 
   <div class="footer">
-    <p>Cancel</p>
-    <p>Add</p>
+    <button
+    class="btn"
+    type="button"
+    name="cancel-new-assignment-button"
+    id="cancel-new-assignment-button"
+    (click)="onCancel($event)"
+    >Cancel</button>
+
+    <button
+    class="btn btn-primary"
+    type="button"
+    name="add-new-assignment-button"
+    id="add-new-assignment-button"
+    (click)="onAdd($event)"
+    >Add</button>
   </div>
 </div>

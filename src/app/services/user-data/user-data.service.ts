@@ -36,7 +36,7 @@ export class UserDataService {
   // Finds the course by its ID and updates the rest of the information.
   // ID is immutable. (Should it not be?)
   updateCourse(course: Course) {
-    ipcRenderer.send('test', 'heyo');
+    ipcRenderer.send('update:course', { course });
   }
 
 

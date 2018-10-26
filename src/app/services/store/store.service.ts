@@ -4,6 +4,7 @@ import { Course } from '../../course';
 import { CourseItem } from '../../course-item';
 import { ContentType } from '../../content-type';
 import { Icon } from '../../icon';
+import { Assignment } from '../../assignment';
 
 @Injectable({
   providedIn: 'root'
@@ -48,23 +49,27 @@ export class StoreService {
       this.userDataService.getCourses()
         .then(courses => {
           this.courses = courses;
-          // return this.userDataService.getSidebarOrder();
+          return this.userDataService.getSidebarOrder();
+        })
+        .then(ord => {
+          // console.log('got sidebar order:', ord);
+
+          let order: string[];
+          // TODO: maybe try to preserve the order that does exist then append the rest
+          //       in the case that ord.length > 0 but !== this.courses.length?
+          if (ord && ord.length === this.courses.length) {
+            order = ord;
+          } else {
+            order = this.courses.map(c => c.id);
+            this.userDataService.updateSidebarOrder(order);
+          }
+          const coursesInOrder = order.map(id => this.courses.find(c => c.id === id));
+          this.courses = coursesInOrder;
+          // this.sidebarCourseItems = order.map(id => CourseItem.from(this.courses.find(c => c.id === id)));
+          // console.log('order:', order);
+          // console.log('sidebar course items:', this.sidebarCourseItems);
+
         });
-        // .then(ord => {
-        //   console.log('got sidebar order:', ord);
-
-        //   let order: string[];
-        //   if (ord) {
-        //     order = ord;
-        //   } else {
-        //     order = this.courses.map(c => c.id);
-        //     this.userDataService.updateSidebarOrder(order);
-        //   }
-        //   this.sidebarCourseItems = order.map(id => CourseItem.from(this.courses.find(c => c.id === id)));
-        //   console.log('order:', order);
-        //   console.log('sidebar course items:', this.sidebarCourseItems);
-
-        // });
     });
   }
 
@@ -77,17 +82,23 @@ export class StoreService {
    * @returns The index of the newly inserted course
    */
   addCourse(course: Course, position?: number): number {
+    let pos = position;
+
     if (position) {
       this.courses = [
         ...this.courses.slice(0, position),
         course,
-        ...this.courses.slice(position)
+        ...this.courses.slice(position),
       ];
-      return position;
     } else {
       this.courses = [...this.courses, course];
-      return this.courses.length - 1;
+      pos = this.courses.length - 1;
     }
+
+    this.userDataService.createCourse(course);
+    this.userDataService.appendToSidebar(course.id);
+
+    return pos;
   }
 
   getFirstSelected(): Course {
@@ -102,6 +113,8 @@ export class StoreService {
     // BUG: saw an instance where this.courses[index] returned undefined. Maybe I clicked the UI too fast
     //      but it would be nice to find out how to reproduce it.
     this.courses[index].title = title;
+
+    this.userDataService.updateCourse(this.courses[index]);
   }
 
 
@@ -124,6 +137,37 @@ export class StoreService {
 
   removeCourseFromSelection(index: number) {
     this.selectedCourses = this.selectedCourses.filter(i => i !== index);
+  }
+
+
+  // --- Assignments
+
+  /**
+   * Adds a new assignment to the specified course.
+   *
+   * This method automatically adds the course at the appropriate position in the
+   * assignments array for the corresponding type, keeping the array sorted by due date.
+   *
+   * @param assignment - The assignment to be added
+   * @param course - (Optional) The course to which the assignment should be added. If omitted, uses the first selected course.
+   */
+  // TODO: handling types by ignoring case. Maybe come back to this sometime
+  addAssignment(assignment: Assignment, course: Course = this.getFirstSelected()) {
+    const position = this.courses.findIndex(c => c.id === course.id);
+
+    // TODO: does this count as mutating state...? how to go about it? the addAssignment method is useful
+    //       because it updates the displayOrder (among others things in the future, potentially)
+    course.addAssignment(assignment);
+
+    console.log('THIS.COURSES (before)', this.courses);
+    this.courses = [
+      ...this.courses.slice(0, position),
+      course,
+      ...this.courses.slice(position + 1),
+    ];
+    console.log('THIS.COURSES (after)', this.courses);
+
+    this.userDataService.updateCourse(course);
   }
 
 }

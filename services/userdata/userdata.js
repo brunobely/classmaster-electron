@@ -22,7 +22,18 @@ function init() {
     console.log('app path:', electron_1.app.getAppPath());
     console.log('__dirname', __dirname);
     fse.mkdirs(coursesPath);
-    fse.createFile(sidebarPath);
+    fse.exists(sidebarPath, function (exists) {
+        if (!exists) {
+            fse.outputJSON(sidebarPath, { order: [] }, function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log('Created sidebar order successfully!');
+                }
+            });
+        }
+    });
     electron_1.ipcMain.on('test', function (event, arg) {
         console.log('arg', arg);
     });
@@ -37,6 +48,35 @@ function init() {
             }
             else {
                 console.log("Wrote " + arg.course.title + "-" + arg.course.id + ".course successfully!");
+            }
+        });
+    });
+    electron_1.ipcMain.on('update:course', function (event, arg) {
+        console.log('update:course, arg:', arg);
+        fse.readdir(coursesPath, function (err, files) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                files.forEach(function (file) {
+                    if (file.endsWith(arg.course.id + ".course")) {
+                        var title = file.substring(0, file.indexOf(arg.course.id + ".course"));
+                        var newPath = file;
+                        if (title !== arg.course.title) {
+                            newPath = path.join(coursesPath, arg.course.title + "-" + arg.course.id + ".course");
+                            fse.renameSync(file, newPath);
+                        }
+                        fse.outputJSON(newPath, arg.course, function (outputErr) {
+                            // TODO: maybe reply with a success or error message?
+                            if (outputErr) {
+                                console.log(outputErr);
+                            }
+                            else {
+                                console.log("Updated " + arg.course.title + "-" + arg.course.id + ".course successfully!");
+                            }
+                        });
+                    }
+                });
             }
         });
     });
@@ -84,7 +124,7 @@ function init() {
                     console.log(err);
                 }
                 else {
-                    console.log('Wrote sidebar order successfully!');
+                    console.log('Updated sidebar order successfully!');
                 }
             });
         });

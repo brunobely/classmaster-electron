@@ -18,7 +18,7 @@ export class EmptyGridComponent implements OnInit {
 
   onModalOverlayClick(event) {
     console.log('clicked modal overlay', event);
-    this.showNewAssignmentModal = false;
+    this.dismissModal();
   }
 
   onAddAssignment(event) {
@@ -40,6 +40,10 @@ export class EmptyGridComponent implements OnInit {
     // // TODO: enhance user experience like switching to the window instead of killing
     // //       the existing one and opening a new one, if there already is an open one
     // window.open('/test', 'add_course', 'nodeIntegration=yes');
+  }
+
+  dismissModal() {
+    this.showNewAssignmentModal = false;
   }
 
 }

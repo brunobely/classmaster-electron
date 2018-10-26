@@ -1,4 +1,4 @@
-import { Assignments } from './assignment';
+import { Assignments, Assignment } from './assignment';
 import { Week } from './week';
 import { Icon } from './icon';
 import * as Color from 'color';
@@ -19,7 +19,8 @@ export class Course {
     public code?: string,
     public department?: string,
     public assignments?: Assignments,
-    public icon?: Icon) {
+    public icon?: Icon,
+    public displayOrder?: string[]) {
   }
 
   static fromJSON(json: any): Course {
@@ -28,7 +29,7 @@ export class Course {
       g: json.accent.color[1],
       b: json.accent.color[2],
     });
-    return new Course(json.id, json.title, accent, json.code, json.department, json.assignments, json.icon);
+    return new Course(json.id, json.title, accent, json.code, json.department, json.assignments, json.icon, json.displayOrder);
   }
 
   // TODO: make this into a calculated property that changes with get/set to assignments?
@@ -60,4 +61,25 @@ export class Course {
     console.log(weeks);
     return weeks;
   }
+
+  addAssignment(assignment: Assignment) {
+    const type = assignment.type;
+
+    if (!this.assignments) {
+      this.assignments = {};
+      this.displayOrder = [];
+    }
+
+    if (type in this.assignments) {
+      // TODO: binary search when inserting
+      this.assignments[type].push(assignment);
+      this.assignments[type].sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
+    } else {
+      this.assignments[type] = [assignment];
+      this.displayOrder.push(type);
+    }
+  }
+
+  // TODO: allow for reordering of assignments
+
 }
