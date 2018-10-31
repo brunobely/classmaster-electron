@@ -1,6 +1,6 @@
 <div class="grid">
   <!-- do I need to check displayOrder()? Course is supposed to always keep it synced with assignments -->
-  <ng-container *ngIf="assignments() && order">
+  <ng-container *ngIf="!isEmpty()">
     <div class="column" *ngFor="let i of columnIndices">
         <ng-container *ngIf="i < Object.keys(assignments()).length - 1">
             <app-tile
@@ -20,7 +20,7 @@
         </ng-container>
       </div>
   </ng-container>
-  <ng-container *ngIf="!assignments() || !order">
+  <ng-container *ngIf="isEmpty()">
     <!-- No assignments -->
     <app-empty-grid></app-empty-grid>
   </ng-container>

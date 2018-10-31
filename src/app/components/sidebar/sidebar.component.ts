@@ -78,20 +78,40 @@ export class SidebarComponent implements OnInit, /*AfterViewChecked,*/ DoCheck {
     // TODO: maybe make a factory function for this that takes the number of courses to be deleted?
     const deleteSingleCourseMenuItem = new MenuItem({
       label: 'Delete Course',
-      click: () => {
-        console.log('delete');
-      }
+      click: this.deleteCourses(),
     });
 
     const deleteMultipleCoursesMenuItem = new MenuItem({
       label: 'Delete Courses',
-      click: () => {
-        console.log('delete');
-      }
+      click: this.deleteCourses(),
     });
 
     this.singleCourseContextMenu.append(deleteSingleCourseMenuItem);
     this.multipleCourseContextMenu.append(deleteMultipleCoursesMenuItem);
+  }
+
+  // !! BUG: super weird. Select top 3 courses, open context menu, delete them. First course changes
+  // !!      name to "New Course", but keeps assignments
+  // ! BUG: selection is preserved when courses are deleted.
+  deleteCourses() {
+    return () => {
+      console.log('delete');
+
+      const courses = this.contextMenuOpen.map((open, i) => {
+        if (open) {
+          return this.store.courses[i];
+        }
+      }).filter(item => item); // clears the 'undefined's
+
+      // Passing just the indices might be dangerous. Is it?
+      // const courseIds = this.contextMenuOpen.map((open, i) => {
+      //   if (open) {
+      //     return i;
+      //   }
+      // }).filter(item => item); // clears the 'undefined's
+
+      this.store.removeCourses(courses);
+    };
   }
 
   // ! BUG: when the context menu is open, then we right-click on any course, the

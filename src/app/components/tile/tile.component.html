@@ -1,9 +1,14 @@
-<h3 class="name">{{plural(name) | titlecase}}</h3>
+<div class="header">
+  <h3 class="name">{{plural(name) | titlecase}}</h3>
+  <app-button-strip [assignmentType]="name"></app-button-strip>
+</div>
 <div class="tile">
   <!-- <li *ngFor="let d of data">{{d.dueDate | date:'E, M/d (h:mmaaaaa)'}} {{d.title}}</li> -->
+  <!-- TODO: implement selection and nice multiple selection logic (like sidebar) -->
   <app-tile-row
     *ngFor="let d of data"
     [assignment]="d"
+    [selected]="false"
   ></app-tile-row>
 </div>
 <!-- <div class="fade-out"></div> -->

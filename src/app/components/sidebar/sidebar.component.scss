@@ -84,7 +84,7 @@ $contextOpenRadius: 5px; // TRY 6px
 .sidebar button.contextMenuOpen.selectedTop:not(.selectedBottom) {
   box-shadow: inset 0 3px 0 0 #0076ff, inset 3px 0 0 0 #0076ff, inset -3px 0 0 0 #0076ff;
 }
-.sidebar button.contextMenuOpen:not(.selectedTop):not(.selectedBottom) {
+.sidebar button.contextMenuOpen.selected:not(.selectedTop):not(.selectedBottom) {
   box-shadow: inset 3px 0 0 0 #0076ff, inset -3px 0 0 0 #0076ff;
 }
 

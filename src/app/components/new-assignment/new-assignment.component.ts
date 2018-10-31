@@ -4,6 +4,7 @@ import { StoreService } from '../../services/store/store.service';
 import { Assignment } from '../../assignment';
 
 import * as uuidv1 from 'uuid/v1';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-new-assignment',
@@ -45,7 +46,7 @@ export class NewAssignmentComponent implements OnInit {
     const assignment = {
       id: uuidv1(),
       title: this.title,
-      dueDate: new Date(this.dueDate),
+      dueDate: moment(this.dueDate).toDate(), // TODO: maybe use moment instead of Date in Assignment?
       type: this.type.toLocaleLowerCase(),
     };
     this.store.addAssignment(assignment);

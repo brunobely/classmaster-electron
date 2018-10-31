@@ -1,0 +1,51 @@
+:host {
+  display: flex;
+  flex-direction: row-reverse;
+  // TODO: make this shrink as needed, then expand on hover
+
+  height: 100%;
+  padding: 5px 10px;
+  box-sizing: border-box;
+
+  // background-color: cornflowerblue;
+}
+
+:host:hover {
+  // background-color: lightskyblue;
+}
+
+button {
+  // background-color: tomato;
+  // background-color: transparent;
+  border: none;
+  outline: none;
+  // padding: 0 2px;
+  padding: 0 5px;
+  margin: 0;
+
+  color: #999;
+
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+button:first-of-type {
+  // padding-right: 6px;
+
+  // background-color: rebeccapurple;
+}
+button:last-of-type {
+  // padding-left: 6px;
+
+  // background-color: goldenrod;
+}
+button:hover {
+  // color: #ccc;
+  // border: 1px solid #999;
+  // border-style: wave; not supported by any browser lol
+  box-shadow: 0 0 0 1px lightgrey;
+  z-index: 1000;
+}
+button:active {
+  color: #777;
+  background-color: lightgrey;
+}

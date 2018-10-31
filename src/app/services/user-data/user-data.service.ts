@@ -32,6 +32,9 @@ export class UserDataService {
     // Send course as a property of an object to enable future passing of more options
     ipcRenderer.send('create:course', { course });
   }
+  deleteCourse(course: Course) {
+    ipcRenderer.send('delete:course', { course });
+  }
 
   // Finds the course by its ID and updates the rest of the information.
   // ID is immutable. (Should it not be?)
@@ -64,6 +67,16 @@ export class UserDataService {
     this.getSidebarOrder().then(order => {
       console.log('order', order, 'id', id);
       this.updateSidebarOrder([...order, id]);
+    });
+  }
+
+  deleteFromSidebar(id: string) {
+    this.getSidebarOrder().then(order => {
+      const pos = order.findIndex(i => i === id);
+      this.updateSidebarOrder([
+        ...order.slice(0, pos),
+        ...order.slice(pos + 1)
+      ]);
     });
   }
 }

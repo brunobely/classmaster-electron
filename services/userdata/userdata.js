@@ -51,6 +51,19 @@ function init() {
             }
         });
     });
+    electron_1.ipcMain.on('delete:course', function (event, arg) {
+        console.log('delete:course, arg:', arg);
+        var filePath = path.join(coursesPath, arg.course.title + "-" + arg.course.id + ".course");
+        fse.unlink(filePath, function (err) {
+            // TODO: maybe reply with a success or error message?
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("Unlinked " + arg.course.title + "-" + arg.course.id + ".course successfully!");
+            }
+        });
+    });
     electron_1.ipcMain.on('update:course', function (event, arg) {
         console.log('update:course, arg:', arg);
         fse.readdir(coursesPath, function (err, files) {
@@ -61,12 +74,14 @@ function init() {
                 files.forEach(function (file) {
                     if (file.endsWith(arg.course.id + ".course")) {
                         var title = file.substring(0, file.indexOf(arg.course.id + ".course"));
-                        var newPath = file;
+                        var filePath = path.join(coursesPath, file);
+                        console.log('file:', file);
                         if (title !== arg.course.title) {
-                            newPath = path.join(coursesPath, arg.course.title + "-" + arg.course.id + ".course");
-                            fse.renameSync(file, newPath);
+                            var oldPath = filePath;
+                            filePath = path.join(coursesPath, arg.course.title + "-" + arg.course.id + ".course");
+                            fse.renameSync(oldPath, filePath);
                         }
-                        fse.outputJSON(newPath, arg.course, function (outputErr) {
+                        fse.outputJSON(filePath, arg.course, function (outputErr) {
                             // TODO: maybe reply with a success or error message?
                             if (outputErr) {
                                 console.log(outputErr);

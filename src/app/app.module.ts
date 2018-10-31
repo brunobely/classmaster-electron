@@ -36,6 +36,7 @@ import { EmptyGridComponent } from './components/empty-grid/empty-grid.component
 import { CourseViewComponent } from './components/course-view/course-view.component';
 import { NewAssignmentComponent } from './components/new-assignment/new-assignment.component';
 import { HeaderTextareaComponent } from './components/header-textarea/header-textarea.component';
+import { ButtonStripComponent } from './components/button-strip/button-strip.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -48,6 +49,9 @@ library.add(fas.faUniversity);
 library.add(fas.faCalendarAlt);
 library.add(fas.faPlus);
 library.add(fas.faSquare);
+library.add(fas.faPen);
+
+library.add(far.faCalendarAlt);
 
 @NgModule({
   declarations: [
@@ -65,7 +69,8 @@ library.add(fas.faSquare);
     EmptyGridComponent,
     CourseViewComponent,
     NewAssignmentComponent,
-    HeaderTextareaComponent
+    HeaderTextareaComponent,
+    ButtonStripComponent
   ],
   imports: [
     BrowserModule,

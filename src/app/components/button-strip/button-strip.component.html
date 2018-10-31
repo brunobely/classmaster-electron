@@ -1,0 +1,12 @@
+<!-- TODO: make a cooler tooltip that animates maybe -->
+<button
+  *ngFor="let button of buttons"
+  (click)="button.handler()"
+  title="{{button.tooltip}}"
+>
+  <fa-icon
+  [icon]="[button.icon.prefix, button.icon.name]"
+
+  [fixedWidth]="true"
+  ></fa-icon>
+</button>

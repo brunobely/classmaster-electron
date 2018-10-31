@@ -14,6 +14,9 @@
   border-radius: 5px; // TODO: maybe not?
 }
 .row:hover {
+  background-color: #eee;
+}
+.row.selected {
   background-color: #ddd;
 }
 
@@ -50,6 +53,20 @@
   font-weight: 500;
   user-select: none;
   // background-color: green;
+
+  white-space: nowrap;
+  text-overflow: ellipsis; // TODO: make this truncate the middle rather than the end of the string
+  overflow: hidden;
+}
+
+input.title {
+  appearance: none;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  padding: 0;
+  font: inherit;
+  font-weight: 500;
 }
 
 .due {
@@ -63,4 +80,32 @@
   color: #555; // TODO: set color by closeness of due date
 
   padding-right: 10px;
+  padding-left: 2px;
+}
+
+button.due {
+  // background-color: tomato;
+  // background-color: transparent;
+  border: none;
+  outline: none;
+  // padding: 0 2px;
+  padding: 5px;
+  margin: 5px;
+
+  color: #999;
+  background-color: transparent;
+
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+button.due:hover {
+  // color: #ccc;
+  // border: 1px solid #999;
+  // border-style: wave; not supported by any browser lol
+  box-shadow: 0 0 0 1px lightgrey;
+  z-index: 1000;
+}
+button.due:active {
+  color: #777;
+  background-color: lightgrey;
 }

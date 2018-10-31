@@ -19,6 +19,33 @@
   margin-bottom: 0;
 }
 
+.header {
+  flex: none;
+  display: flex;
+  height: 35px;
+}
+
+.name {
+  height: 100%;
+  line-height: 25px; // TODO: any way to do this in a way that expands if .header height is changed?
+  padding: 5px 0;
+
+  box-sizing: border-box;
+
+  color: #999;
+  margin: 0;
+  // margin: 0 0 10px 0;
+
+  // position: relative;
+  // left: -3px;
+  // top: -4px;
+  // position: relative;
+  // left: -11px;
+  // top: -14px;
+  // background-color: red;
+  font-weight: 600;
+}
+
 .tile {
   // margin: 10px 0;
   border-radius: 5px;
@@ -33,18 +60,6 @@
   overflow: auto;
 }
 
-.name {
-  color: #999;
-  margin: 0 0 10px 0;
-  // position: relative;
-  // left: -3px;
-  // top: -4px;
-  // position: relative;
-  // left: -11px;
-  // top: -14px;
-  // background-color: red;
-  font-weight: 600;
-}
 
 li {
   margin: 10px 0;

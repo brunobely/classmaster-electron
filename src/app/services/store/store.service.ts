@@ -101,6 +101,26 @@ export class StoreService {
     return pos;
   }
 
+  removeCourses(courses: Course[]) {
+    console.log('REMOVE', courses);
+
+    for (const course of courses) {
+      this.removeCourse(course);
+    }
+  }
+
+  removeCourse(course: Course) {
+    const position = this.courses.findIndex(c => c.id === course.id);
+
+    this.courses = [
+      ...this.courses.slice(0, position),
+      ...this.courses.slice(position + 1),
+    ];
+
+    this.userDataService.deleteCourse(course);
+    this.userDataService.deleteFromSidebar(course.id);
+  }
+
   getFirstSelected(): Course {
     // TODO: refactor so that courses and selectedCourses are initialized with empty arrays
     if (this.courses && this.selectedCourses) {
@@ -112,9 +132,10 @@ export class StoreService {
   updateCourseTitle(index: number, title: string) {
     // BUG: saw an instance where this.courses[index] returned undefined. Maybe I clicked the UI too fast
     //      but it would be nice to find out how to reproduce it.
-    this.courses[index].title = title;
-
-    this.userDataService.updateCourse(this.courses[index]);
+    if (this.courses[index].title !== title) {
+      this.courses[index].title = title;
+      this.userDataService.updateCourse(this.courses[index]);
+    }
   }
 
 
@@ -166,6 +187,27 @@ export class StoreService {
       ...this.courses.slice(position + 1),
     ];
     console.log('THIS.COURSES (after)', this.courses);
+
+    this.userDataService.updateCourse(course);
+  }
+
+  removeAssignment(assignment: Assignment, course: Course = this.getFirstSelected()) {
+    // TODO: maybe implement this.getCourseIndex(course)
+    const position = this.courses.findIndex(c => c.id === course.id);
+
+    course.removeAssignment(assignment);
+
+    this.courses = [
+      ...this.courses.slice(0, position),
+      course,
+      ...this.courses.slice(position + 1),
+    ];
+
+    this.userDataService.updateCourse(course);
+  }
+
+  updateAssignment(assignment: Assignment, course: Course = this.getFirstSelected()) {
+    course.updateAssignment(assignment);
 
     this.userDataService.updateCourse(course);
   }

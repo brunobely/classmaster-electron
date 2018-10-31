@@ -51,6 +51,11 @@ export class TileGridComponent implements OnInit, DoCheck {
     }
   }
 
+  isEmpty(): boolean {
+    const assignments = this.assignments();
+    return !assignments || Object.keys(assignments).length === 0 || !this.order || this.order.length === 0;
+  }
+
   displayOrder(): string[] {
     return this.store.getFirstSelected().displayOrder;
   }

@@ -44,6 +44,20 @@ export function init() {
     });
   });
 
+  ipcMain.on('delete:course', (event, arg) => {
+    console.log('delete:course, arg:', arg);
+
+    const filePath = path.join(coursesPath, `${arg.course.title}-${arg.course.id}.course`);
+    fse.unlink(filePath, err => {
+      // TODO: maybe reply with a success or error message?
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(`Unlinked ${arg.course.title}-${arg.course.id}.course successfully!`);
+      }
+    });
+  });
+
   ipcMain.on('update:course', (event, arg) => {
     console.log('update:course, arg:', arg);
 
@@ -54,12 +68,14 @@ export function init() {
         files.forEach(file => {
           if (file.endsWith(`${arg.course.id}.course`)) {
             const title = file.substring(0, file.indexOf(`${arg.course.id}.course`));
-            let newPath = file;
+            let filePath = path.join(coursesPath, file);
+            console.log('file:', file);
             if (title !== arg.course.title) {
-              newPath = path.join(coursesPath, `${arg.course.title}-${arg.course.id}.course`);
-              fse.renameSync(file, newPath);
+              const oldPath = filePath;
+              filePath = path.join(coursesPath, `${arg.course.title}-${arg.course.id}.course`);
+              fse.renameSync(oldPath, filePath);
             }
-            fse.outputJSON(newPath, arg.course, outputErr => {
+            fse.outputJSON(filePath, arg.course, outputErr => {
               // TODO: maybe reply with a success or error message?
               if (outputErr) {
                 console.log(outputErr);
